@@ -1,33 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
 
 const Hero = () => {
-  const phoneRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (phoneRef.current) {
-        const rect = phoneRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-
-        // Calculate how far the phone is from center of viewport
-        const phoneCenter = rect.top + rect.height / 2;
-        const viewportCenter = windowHeight / 2;
-        const offset = (viewportCenter - phoneCenter) * 0.15; // Parallax multiplier
-
-        setScrollY(offset);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial position
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-white">
       {/* Grid Background */}
@@ -71,25 +45,30 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Phone Mockup with Parallax Image */}
-          <div className="lg:w-1/2 relative" ref={phoneRef}>
-            <div className="relative mx-auto border-gray-200 bg-white border-[8px] rounded-[2rem] h-[600px] w-[300px] shadow-2xl overflow-hidden ring-1 ring-black/5">
+          {/* Phone Frame with Scrollable Screen */}
+          <div className="lg:w-1/2 relative">
+            <div className="relative mx-auto bg-gray-900 border-[12px] border-gray-900 rounded-[2.5rem] h-[600px] w-[300px] shadow-2xl ring-1 ring-black/10">
               {/* Phone Notch */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-b-2xl z-10"></div>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-7 bg-gray-900 rounded-b-2xl z-20"></div>
 
-              {/* Scrolling App Screenshot */}
-              <div className="absolute inset-0 overflow-hidden">
+              {/* Screen Area - Scrollable */}
+              <div
+                className="absolute inset-0 rounded-[1.5rem] overflow-y-auto overflow-x-hidden bg-white scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent hover:scrollbar-thumb-gray-400"
+                style={{
+                  scrollbarWidth: 'thin',
+                  scrollbarColor: '#d1d5db transparent'
+                }}
+              >
                 <img
-                  ref={imageRef}
                   src="/images/app-screenshot.png"
                   alt="ShiftCheck App - Active Checklists"
-                  className="w-full object-cover object-top transition-transform duration-100 ease-out"
-                  style={{
-                    transform: `translateY(${scrollY}px)`,
-                    minHeight: '120%'
-                  }}
+                  className="w-full"
+                  draggable={false}
                 />
               </div>
+
+              {/* Home Indicator */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-gray-600 rounded-full z-20"></div>
             </div>
           </div>
 
