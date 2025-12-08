@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Camera viewfinder -->
+  <rect x="70" y="30" width="60" height="25" rx="8" fill="#556B2F"/>
+
+  <!-- Camera body -->
+  <rect x="30" y="50" width="140" height="110" rx="15" fill="#6C8F32"/>
+
+  <!-- Lens (white circle) -->
+  <circle cx="100" cy="105" r="45" fill="white"/>
+
+  <!-- Checkmark inside lens -->
+  <path
+    d="M 75 105 L 92 122 L 125 85"
+    stroke="#6C8F32"
+    stroke-width="12"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+
+  <!-- Camera indicator light -->
+  <circle cx="150" cy="75" r="8" fill="#8BA055"/>
+</svg>

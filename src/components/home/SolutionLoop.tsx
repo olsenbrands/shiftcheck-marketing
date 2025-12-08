@@ -40,6 +40,15 @@ const SolutionLoop = () => {
   return (
     <section id="how-it-works" className="py-24 bg-white">
       <div className="container mx-auto px-4 md:px-8">
+        {/* Phone Mockup Hero */}
+        <div className="flex justify-center mb-20">
+          <img
+            src="/images/phone-mockup.jpg"
+            alt="ShiftCheck App on Mobile Device"
+            className="max-w-md w-full h-auto"
+          />
+        </div>
+
         <div className="mb-16 md:text-center max-w-3xl md:mx-auto">
           <h2 className="text-primary-600 font-mono text-xs tracking-widest uppercase mb-4">The ShiftCheck Workflow</h2>
           <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">How does ShiftCheck work?</h3>
@@ -52,7 +61,8 @@ const SolutionLoop = () => {
           {/* Connector Line (Desktop) */}
           <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-gray-200 via-primary-200 to-gray-200 z-0"></div>
 
-          <div className="grid md:grid-cols-4 gap-8 relative z-10">
+          {/* Desktop Grid */}
+          <div className="hidden md:grid md:grid-cols-4 gap-8 relative z-10">
             {steps.map((step, idx) => (
               <div key={idx} className="bg-white p-6 rounded-xl border border-gray-200 hover:border-primary-300 transition-all group shadow-sm hover:shadow-md">
                 <div className={`w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center ${step.color} font-bold mb-6 group-hover:scale-110 transition-transform shadow-sm`}>
@@ -64,6 +74,31 @@ const SolutionLoop = () => {
                 </p>
               </div>
             ))}
+          </div>
+
+          {/* Mobile Timeline */}
+          <div className="md:hidden relative">
+            {/* Vertical Timeline Line */}
+            <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-gradient-to-b from-primary-300 via-primary-400 to-primary-500"></div>
+
+            <div className="space-y-0">
+              {steps.map((step, idx) => (
+                <div key={idx} className="relative flex gap-4">
+                  {/* Timeline Node */}
+                  <div className={`relative z-10 w-12 h-12 rounded-full bg-white border-2 border-primary-400 flex items-center justify-center ${step.color} font-bold shrink-0 shadow-md`}>
+                    {step.icon}
+                  </div>
+
+                  {/* Card */}
+                  <div className="flex-1 bg-white p-5 rounded-xl border border-gray-200 shadow-sm mb-4">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2">{step.title}</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

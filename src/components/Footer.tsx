@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { CheckCircle2 } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -8,9 +7,11 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
           <div className="max-w-xs">
             <Link to="/" className="flex items-center gap-2 mb-6">
-              <div className="w-6 h-6 bg-primary-500 rounded flex items-center justify-center text-white font-bold text-xs shadow-md">
-                <CheckCircle2 size={16} />
-              </div>
+              <img
+                src="/camera-logo.svg"
+                alt="ShiftCheck"
+                className="w-6 h-6 shadow-md rounded"
+              />
               <span className="text-lg font-bold text-gray-900 uppercase tracking-tight">ShiftCheck</span>
             </Link>
             <p className="mb-6 leading-relaxed">

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle2, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,9 +18,11 @@ const Navbar = () => {
     <nav className={`fixed w-full z-50 transition-all duration-300 border-b ${scrolled ? 'bg-white/90 backdrop-blur-md border-gray-200 py-4 shadow-sm' : 'bg-transparent border-transparent py-6'}`}>
       <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary-500 rounded flex items-center justify-center text-white font-extrabold shadow-lg shadow-primary-500/30">
-            <CheckCircle2 size={20} className="text-white" />
-          </div>
+          <img
+            src="/camera-logo.svg"
+            alt="ShiftCheck"
+            className="w-8 h-8 shadow-lg shadow-primary-500/30 rounded"
+          />
           <span className={`text-xl font-bold tracking-tight uppercase ${scrolled ? 'text-gray-900' : 'text-gray-900'}`}>
             <span className="text-accent-500">Shift</span><span className="text-primary-700">Check</span>
           </span>
