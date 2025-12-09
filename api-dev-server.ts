@@ -95,10 +95,13 @@ async function loadHandler(handlerPath: string) {
 const routes = [
   { path: '/api/auth/send-verification', handler: './api/auth/send-verification.ts' },
   { path: '/api/auth/verify-token', handler: './api/auth/verify-token.ts' },
+  { path: '/api/auth/send-password-reset', handler: './api/auth/send-password-reset.ts' },
+  { path: '/api/auth/reset-password', handler: './api/auth/reset-password.ts' },
   { path: '/api/webhooks/stripe', handler: './api/webhooks/stripe.ts' },
   { path: '/api/stripe/create-payment-intent', handler: './api/stripe/create-payment-intent.ts' },
   { path: '/api/email/send', handler: './api/email/send.ts' },
   { path: '/api/ai-help', handler: './api/ai-help.ts' },
+  { path: '/api/sms/send-invitation', handler: './api/sms/send-invitation.ts' },
 ];
 
 // Register routes
