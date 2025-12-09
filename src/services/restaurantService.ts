@@ -23,8 +23,12 @@ export interface Restaurant {
   manager_email: string;  // DB column
   manager_phone: string;  // DB column
   photo_url: string | null;  // DB column
-  manager_invited: boolean;  // DB column
+  manager_invited: boolean;  // DB column (legacy)
   soft_deleted: boolean;  // DB column
+  // Invitation tracking (syncs with shiftcheck-app Owner Dashboard)
+  invitation_sent: boolean;  // DB column - TRUE when SMS sent
+  invitation_sent_at: string | null;  // DB column - timestamp of send
+  invitation_sent_to_phone: string | null;  // DB column - E.164 phone
   // Aliases for backward compatibility in UI code
   restaurant_address?: string | null;
   restaurant_phone?: string | null;
@@ -425,4 +429,102 @@ export async function activateRestaurantsUpToLimit(maxActive: number): Promise<{
   }
 
   return { activatedCount, error: null };
+}
+
+// ============================================
+// Manager Invitation
+// ============================================
+
+/**
+ * Mark manager invitation as sent
+ * Updates both legacy (manager_invited) and new (invitation_sent) columns
+ * This syncs with shiftcheck-app Owner Dashboard
+ */
+export async function markInvitationSent(
+  restaurantId: string,
+  phoneNumber: string
+): Promise<{
+  restaurant: Restaurant | null;
+  error: Error | null;
+}> {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { restaurant: null, error: new Error('User not authenticated') };
+  }
+
+  const normalizedPhone = normalizePhone(phoneNumber);
+
+  const { data, error } = await supabase
+    .from('restaurants')
+    .update({
+      // New columns (used by shiftcheck-app Owner Dashboard)
+      invitation_sent: true,
+      invitation_sent_at: new Date().toISOString(),
+      invitation_sent_to_phone: normalizedPhone,
+      // Legacy column (backward compatibility)
+      manager_invited: true,
+    })
+    .eq('id', restaurantId)
+    .eq('owner_id', user.id)
+    .select()
+    .single();
+
+  if (error) {
+    return { restaurant: null, error: new Error(error.message) };
+  }
+
+  return { restaurant: data as Restaurant, error: null };
+}
+
+/**
+ * Send manager invitation SMS
+ * Calls the /api/sms/send-invitation endpoint
+ */
+export async function sendManagerInvitationSms(
+  phone: string,
+  restaurantName: string,
+  managerFirstName: string
+): Promise<{
+  success: boolean;
+  messageSid?: string;
+  error?: string;
+}> {
+  const normalizedPhone = normalizePhone(phone);
+
+  // Generate signup link
+  const signupLink = `https://shiftcheck.app/manager/signup?phone=${encodeURIComponent(normalizedPhone)}`;
+
+  // Build message (matches shiftcheck-app template)
+  const message = `Hi ${managerFirstName}! You've been invited to manage ${restaurantName} on ShiftCheck. Complete your signup here: ${signupLink}`;
+
+  try {
+    const response = await fetch('/api/sms/send-invitation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        phone: normalizedPhone,
+        message
+      })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        error: result.error || result.details || 'Failed to send SMS'
+      };
+    }
+
+    return {
+      success: true,
+      messageSid: result.messageSid
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Network error'
+    };
+  }
 }

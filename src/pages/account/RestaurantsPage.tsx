@@ -20,6 +20,8 @@ import {
   AlertCircle,
   Pencil,
   Trash2,
+  Mail,
+  CheckCircle,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { getOwnerProfile } from '../../services/ownerService';
@@ -31,6 +33,7 @@ import {
 } from '../../services/restaurantService';
 import { getOwnerSubscription, type Subscription } from '../../services/subscriptionService';
 import { formatPhoneForDisplay } from '../../utils/phone';
+import InviteManagerModal from '../../components/InviteManagerModal';
 
 export default function AccountRestaurantsPage() {
   const navigate = useNavigate();
@@ -41,6 +44,10 @@ export default function AccountRestaurantsPage() {
   const [loading, setLoading] = useState(true);
   const [toggling, setToggling] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Invite Manager Modal state
+  const [inviteModalOpen, setInviteModalOpen] = useState(false);
+  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
 
   // Load data
   useEffect(() => {
@@ -120,6 +127,20 @@ export default function AccountRestaurantsPage() {
     } else {
       setError(deleteError?.message || 'Failed to delete restaurant');
     }
+  };
+
+  const handleOpenInviteModal = (restaurant: Restaurant) => {
+    setSelectedRestaurant(restaurant);
+    setInviteModalOpen(true);
+  };
+
+  const handleInviteSuccess = (updatedRestaurant: Restaurant) => {
+    // Update the restaurant in the list with new invitation status
+    setRestaurants(
+      restaurants.map((r) =>
+        r.id === updatedRestaurant.id ? updatedRestaurant : r
+      )
+    );
   };
 
   if (authLoading || loading) {
@@ -243,18 +264,37 @@ export default function AccountRestaurantsPage() {
                       </p>
                     )}
                     {restaurant.manager_name && (
-                      <p className="text-sm text-gray-500 flex items-center">
-                        <User className="h-4 w-4 mr-2" />
-                        {restaurant.manager_name}
-                        {restaurant.manager_phone && (
-                          <span className="ml-1">
-                            ({formatPhoneForDisplay(restaurant.manager_phone)})
+                      <div className="flex items-center flex-wrap gap-2">
+                        <p className="text-sm text-gray-500 flex items-center">
+                          <User className="h-4 w-4 mr-2" />
+                          {restaurant.manager_name}
+                          {restaurant.manager_phone && (
+                            <span className="ml-1">
+                              ({formatPhoneForDisplay(restaurant.manager_phone)})
+                            </span>
+                          )}
+                        </p>
+
+                        {/* Invite Manager Badge */}
+                        {restaurant.is_owner_managed ? (
+                          <span className="px-2 py-0.5 text-xs font-medium text-emerald-600 bg-emerald-50 rounded-full">
+                            Owner Managed
                           </span>
-                        )}
-                        {restaurant.is_owner_managed && (
-                          <span className="ml-2 text-xs text-emerald-600">(Owner Managed)</span>
-                        )}
-                      </p>
+                        ) : restaurant.invitation_sent ? (
+                          <span className="px-2 py-0.5 text-xs font-medium text-emerald-700 bg-emerald-100 rounded-full flex items-center">
+                            <CheckCircle className="h-3 w-3 mr-1" />
+                            Invited
+                          </span>
+                        ) : restaurant.manager_phone ? (
+                          <button
+                            onClick={() => handleOpenInviteModal(restaurant)}
+                            className="px-2 py-0.5 text-xs font-medium text-orange-700 bg-orange-100 hover:bg-orange-200 rounded-full flex items-center transition-colors cursor-pointer animate-pulse hover:animate-none"
+                          >
+                            <Mail className="h-3 w-3 mr-1" />
+                            Invite Manager
+                          </button>
+                        ) : null}
+                      </div>
                     )}
                   </div>
                 </div>
@@ -318,6 +358,19 @@ export default function AccountRestaurantsPage() {
           </div>
         )}
       </div>
+
+      {/* Invite Manager Modal */}
+      {selectedRestaurant && (
+        <InviteManagerModal
+          restaurant={selectedRestaurant}
+          isOpen={inviteModalOpen}
+          onClose={() => {
+            setInviteModalOpen(false);
+            setSelectedRestaurant(null);
+          }}
+          onSuccess={handleInviteSuccess}
+        />
+      )}
     </div>
   );
 }
