@@ -34,12 +34,12 @@ const Navbar = () => {
           <Link to="/solution" className="text-gray-600 hover:text-primary-600 font-medium text-sm transition-colors uppercase tracking-wide">Solution</Link>
           <Link to="/features" className="text-gray-600 hover:text-primary-600 font-medium text-sm transition-colors uppercase tracking-wide">Features</Link>
           <Link to="/pricing" className="text-gray-600 hover:text-primary-600 font-medium text-sm transition-colors uppercase tracking-wide">Pricing</Link>
-          <a
-            href="https://app.shiftcheck.app"
+          <Link
+            to="/auth/login"
             className="bg-white text-gray-700 border border-gray-300 px-5 py-2 rounded font-bold text-sm hover:bg-gray-50 transition-all"
           >
             Login
-          </a>
+          </Link>
           <Link
             to="/auth/verify-email"
             className="bg-primary-500 text-white px-5 py-2 rounded font-bold text-sm hover:bg-primary-600 transition-all shadow-lg shadow-primary-500/30"
@@ -61,13 +61,13 @@ const Navbar = () => {
           <Link to="/solution" className="text-gray-700 font-medium p-3 hover:bg-gray-50 rounded uppercase text-sm tracking-wide" onClick={() => setIsOpen(false)}>Solution</Link>
           <Link to="/features" className="text-gray-700 font-medium p-3 hover:bg-gray-50 rounded uppercase text-sm tracking-wide" onClick={() => setIsOpen(false)}>Features</Link>
           <Link to="/pricing" className="text-gray-700 font-medium p-3 hover:bg-gray-50 rounded uppercase text-sm tracking-wide" onClick={() => setIsOpen(false)}>Pricing</Link>
-          <a
-            href="https://app.shiftcheck.app"
+          <Link
+            to="/auth/login"
             className="text-gray-700 font-medium p-3 hover:bg-gray-50 rounded uppercase text-sm tracking-wide"
             onClick={() => setIsOpen(false)}
           >
             Login
-          </a>
+          </Link>
           <Link
             to="/auth/verify-email"
             className="bg-primary-500 text-white px-6 py-3 rounded font-bold w-full text-center uppercase tracking-wide shadow-lg shadow-primary-500/30"
