@@ -230,16 +230,16 @@ export default function AccountRestaurantsPage() {
                   </div>
 
                   <div className="mt-3 space-y-1">
-                    {restaurant.restaurant_address && (
+                    {(restaurant.address || restaurant.restaurant_address) && (
                       <p className="text-sm text-gray-500 flex items-center">
                         <MapPin className="h-4 w-4 mr-2" />
-                        {restaurant.restaurant_address}
+                        {restaurant.address || restaurant.restaurant_address}
                       </p>
                     )}
-                    {restaurant.restaurant_phone && (
+                    {(restaurant.manager_phone || restaurant.restaurant_phone) && (
                       <p className="text-sm text-gray-500 flex items-center">
                         <Phone className="h-4 w-4 mr-2" />
-                        {formatPhoneForDisplay(restaurant.restaurant_phone)}
+                        {formatPhoneForDisplay(restaurant.manager_phone || restaurant.restaurant_phone || '')}
                       </p>
                     )}
                     {restaurant.manager_name && (

@@ -446,10 +446,11 @@ export default function PaymentPage() {
   const { updateProgress } = useSignupProgress();
 
   const [owner, setOwner] = useState<Owner | null>(null);
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [_restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [tier, setTier] = useState<PricingTier | null>(null);
   const [loading, setLoading] = useState(true);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [restaurantCount, setRestaurantCount] = useState<number>(0);
 
   // Load data and create payment intent
   useEffect(() => {
@@ -462,6 +463,10 @@ export default function PaymentPage() {
         navigate('/signup/complete');
         return;
       }
+
+      // Get restaurant count from localStorage (includes pending restaurants)
+      const storedCount = localStorage.getItem('restaurant_count');
+      const count = storedCount ? parseInt(storedCount, 10) : 0;
 
       // Load owner profile
       const { owner: ownerData } = await getOwnerProfile();
@@ -479,6 +484,10 @@ export default function PaymentPage() {
       }
       setRestaurants(restaurantData);
 
+      // Use stored count if available and valid, otherwise use actual restaurant count
+      const effectiveCount = count > 0 ? count : restaurantData.length;
+      setRestaurantCount(effectiveCount);
+
       // Load tier details
       const { tier: tierData } = await getPricingTier(selectedPlan);
       if (!tierData) {
@@ -495,7 +504,7 @@ export default function PaymentPage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               planId: selectedPlan,
-              restaurantCount: restaurantData.length,
+              restaurantCount: effectiveCount,
               ownerEmail: ownerData.email,
             }),
           });
@@ -527,7 +536,7 @@ export default function PaymentPage() {
 
   const formatPrice = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
-  const monthlyTotal = tier ? tier.price_per_restaurant_cents * restaurants.length : 0;
+  const monthlyTotal = tier ? tier.price_per_restaurant_cents * restaurantCount : 0;
 
   const handlePaymentSuccess = () => {
     // Update signup progress
@@ -592,7 +601,7 @@ export default function PaymentPage() {
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Restaurants</span>
-              <span className="font-medium text-gray-900">{restaurants.length}</span>
+              <span className="font-medium text-gray-900">{restaurantCount}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Price per restaurant</span>
@@ -652,7 +661,7 @@ export default function PaymentPage() {
               <CheckoutForm
                 owner={owner}
                 tier={tier}
-                restaurantCount={restaurants.length}
+                restaurantCount={restaurantCount}
                 monthlyTotal={monthlyTotal}
                 onSuccess={handlePaymentSuccess}
                 onBack={handleBack}
@@ -661,7 +670,7 @@ export default function PaymentPage() {
           ) : (
             <DemoCheckoutForm
               tier={tier}
-              restaurantCount={restaurants.length}
+              restaurantCount={restaurantCount}
               monthlyTotal={monthlyTotal}
               onSuccess={handlePaymentSuccess}
               onBack={handleBack}

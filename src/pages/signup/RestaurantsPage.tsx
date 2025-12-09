@@ -130,8 +130,8 @@ export default function RestaurantsPage() {
 
   const handleEditRestaurant = (restaurant: Restaurant) => {
     setName(restaurant.name);
-    setAddress(restaurant.restaurant_address || '');
-    setRestaurantPhone(formatPhoneForDisplay(restaurant.restaurant_phone || ''));
+    setAddress(restaurant.address || restaurant.restaurant_address || '');
+    setRestaurantPhone(formatPhoneForDisplay(restaurant.manager_phone || restaurant.restaurant_phone || ''));
     setManagerName(restaurant.manager_name || '');
     setManagerPhone(formatPhoneForDisplay(restaurant.manager_phone || ''));
     setIsOwnerManaged(restaurant.is_owner_managed || false);
@@ -314,7 +314,7 @@ export default function RestaurantsPage() {
                     <h3 className="font-semibold text-gray-900">{restaurant.name}</h3>
                     <p className="text-sm text-gray-500 flex items-center mt-1">
                       <MapPin className="h-4 w-4 mr-1" />
-                      {restaurant.restaurant_address}
+                      {restaurant.address || restaurant.restaurant_address}
                     </p>
                     <p className="text-sm text-gray-500 flex items-center mt-1">
                       <User className="h-4 w-4 mr-1" />
