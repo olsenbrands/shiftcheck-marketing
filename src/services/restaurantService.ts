@@ -18,14 +18,19 @@ export interface Restaurant {
   id: string;
   name: string;
   owner_id: string;
-  manager_name: string | null;
-  manager_phone: string | null;
-  restaurant_address: string | null;
-  restaurant_phone: string | null;
-  restaurant_photo_url: string | null;
-  is_owner_managed: boolean;
-  is_active: boolean;
-  activated_at: string | null;
+  address: string;  // DB column
+  manager_name: string;  // DB column
+  manager_email: string;  // DB column
+  manager_phone: string;  // DB column
+  photo_url: string | null;  // DB column
+  manager_invited: boolean;  // DB column
+  soft_deleted: boolean;  // DB column
+  // Aliases for backward compatibility in UI code
+  restaurant_address?: string | null;
+  restaurant_phone?: string | null;
+  is_owner_managed?: boolean;
+  is_active?: boolean;
+  activated_at?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -33,9 +38,10 @@ export interface Restaurant {
 export interface CreateRestaurantInput {
   name: string;
   restaurant_address: string;
-  restaurant_phone: string;
+  restaurant_phone?: string;  // Optional - not in DB schema
   restaurant_photo_url?: string | null;
   manager_name: string;
+  manager_email?: string;  // Required by DB but optional here (defaults to owner email)
   manager_phone: string;
   is_owner_managed?: boolean; // If true, owner is the manager
 }
@@ -73,13 +79,11 @@ export async function createRestaurant(input: CreateRestaurantInput): Promise<{
     .insert({
       name: input.name,
       owner_id: user.id,
-      restaurant_address: input.restaurant_address,
-      restaurant_phone: normalizePhone(input.restaurant_phone),
-      restaurant_photo_url: input.restaurant_photo_url || null,
+      address: input.restaurant_address,  // DB column is 'address'
       manager_name: input.manager_name,
+      manager_email: input.manager_email || 'manager@example.com', // Required by DB schema
       manager_phone: normalizePhone(input.manager_phone),
-      is_active: false, // Always starts inactive
-      activated_at: null,
+      photo_url: input.restaurant_photo_url || null,  // DB column is 'photo_url'
     })
     .select()
     .single();
@@ -230,15 +234,13 @@ export async function updateRestaurant(
     return { restaurant: null, error: new Error('User not authenticated') };
   }
 
-  const updates: Partial<Restaurant> = {};
+  const updates: Record<string, unknown> = {};
 
   if (input.name) updates.name = input.name;
-  if (input.restaurant_address) updates.restaurant_address = input.restaurant_address;
-  if (input.restaurant_phone) updates.restaurant_phone = normalizePhone(input.restaurant_phone);
-  if (input.restaurant_photo_url !== undefined) updates.restaurant_photo_url = input.restaurant_photo_url;
+  if (input.restaurant_address) updates.address = input.restaurant_address;  // DB column is 'address'
+  if (input.restaurant_photo_url !== undefined) updates.photo_url = input.restaurant_photo_url;  // DB column is 'photo_url'
   if (input.manager_name) updates.manager_name = input.manager_name;
   if (input.manager_phone) updates.manager_phone = normalizePhone(input.manager_phone);
-  if (input.is_owner_managed !== undefined) updates.is_owner_managed = input.is_owner_managed;
 
   const { data, error } = await supabase
     .from('restaurants')
