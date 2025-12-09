@@ -199,10 +199,10 @@ const FeaturesPage = () => {
             Ready to transform how you run your restaurant? Let us show you how ShiftCheck works.
           </p>
           <Link
-            to="/demo"
+            to="/auth/verify-email"
             className="inline-flex items-center justify-center gap-2 bg-white text-primary-900 px-8 py-4 rounded font-bold hover:bg-gray-100 transition-all"
           >
-            Request a Demo
+            Start Free Trial
             <ArrowRight size={18} />
           </Link>
         </div>

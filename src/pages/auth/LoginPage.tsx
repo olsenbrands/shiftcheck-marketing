@@ -88,7 +88,7 @@ export default function LoginPage() {
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           Don't have an account?{' '}
-          <Link to="/auth/signup" className="font-medium text-emerald-600 hover:text-emerald-500">
+          <Link to="/auth/verify-email" className="font-medium text-emerald-600 hover:text-emerald-500">
             Sign up
           </Link>
         </p>

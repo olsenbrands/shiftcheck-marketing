@@ -155,10 +155,10 @@ const AboutPage = () => {
             Join the restaurant owners who are taking control of their operations with ShiftCheck.
           </p>
           <Link
-            to="/demo"
+            to="/auth/verify-email"
             className="inline-flex items-center justify-center gap-2 bg-primary-500 text-white px-8 py-4 rounded font-bold hover:bg-primary-600 transition-all shadow-lg"
           >
-            Request a Demo
+            Start Free Trial
             <ArrowRight size={18} />
           </Link>
         </div>

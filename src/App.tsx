@@ -23,6 +23,8 @@ import VerifyEmailPage from './pages/auth/VerifyEmailPage';
 import SignUpPage from './pages/auth/SignUpPage';
 import LoginPage from './pages/auth/LoginPage';
 import AuthCallbackPage from './pages/auth/AuthCallbackPage';
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
+import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 
 // Sign-Up Flow Pages
 import ProfilePage from './pages/signup/ProfilePage';
@@ -70,6 +72,8 @@ function App() {
           <Route path="/auth/signup" element={<SignUpPage />} />
           <Route path="/auth/login" element={<LoginPage />} />
           <Route path="/auth/callback" element={<AuthCallbackPage />} />
+          <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
 
           {/* Sign-Up Flow Pages */}
           <Route path="/signup/profile" element={<ProfilePage />} />

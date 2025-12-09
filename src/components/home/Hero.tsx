@@ -30,10 +30,10 @@ const Hero = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <Link
-                to="/demo"
+                to="/auth/verify-email"
                 className="flex items-center justify-center gap-2 bg-primary-500 text-white px-8 py-4 rounded font-bold hover:bg-primary-600 transition-all shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40"
               >
-                Request Demo
+                Start Free Trial
                 <ArrowRight size={18} />
               </Link>
               <Link

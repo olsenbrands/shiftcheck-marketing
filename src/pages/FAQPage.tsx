@@ -191,10 +191,10 @@ const FAQPage = () => {
               <ArrowRight size={18} />
             </Link>
             <Link
-              to="/demo"
+              to="/auth/verify-email"
               className="inline-flex items-center justify-center gap-2 bg-white text-gray-700 border border-gray-300 px-8 py-4 rounded font-bold hover:bg-gray-50 transition-all"
             >
-              Schedule a Demo
+              Start Free Trial
             </Link>
           </div>
         </div>
