@@ -47,8 +47,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Check Twilio credentials
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
-    const messagingServiceSid = process.env.TWILIO_MESSAGING_SERVICE_SID;
     const fromNumber = process.env.TWILIO_PHONE_NUMBER;
+
+    // Debug logging
+    console.log('📱 Twilio env check:');
+    console.log('   TWILIO_ACCOUNT_SID:', accountSid ? `${accountSid.substring(0, 8)}...` : 'NOT SET');
+    console.log('   TWILIO_AUTH_TOKEN:', authToken ? 'SET (hidden)' : 'NOT SET');
+    console.log('   TWILIO_PHONE_NUMBER:', fromNumber || 'NOT SET');
 
     if (!accountSid || !authToken) {
       console.error('❌ Twilio credentials not configured');
@@ -58,17 +63,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    if (!messagingServiceSid && !fromNumber) {
-      console.error('❌ No Twilio phone number or messaging service configured');
+    if (!fromNumber) {
+      console.error('❌ No Twilio phone number configured');
       return res.status(500).json({
         error: 'SMS service not configured',
-        details: 'Missing TWILIO_MESSAGING_SERVICE_SID or TWILIO_PHONE_NUMBER'
+        details: 'Missing TWILIO_PHONE_NUMBER'
       });
     }
 
     console.log('📱 Sending SMS via Twilio...');
     console.log('   To:', phone);
-    console.log('   Using:', messagingServiceSid ? 'Messaging Service' : 'Phone Number');
+    console.log('   From:', fromNumber);
 
     // Build Twilio API request
     const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`;
@@ -76,13 +81,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const formData = new URLSearchParams();
     formData.append('To', phone);
     formData.append('Body', message);
-
-    // Use Messaging Service SID if available (A2P 10DLC compliant), otherwise use phone number
-    if (messagingServiceSid) {
-      formData.append('MessagingServiceSid', messagingServiceSid);
-    } else {
-      formData.append('From', fromNumber!);
-    }
+    formData.append('From', fromNumber);
 
     const twilioResponse = await fetch(twilioUrl, {
       method: 'POST',
