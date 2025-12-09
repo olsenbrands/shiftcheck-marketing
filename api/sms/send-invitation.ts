@@ -3,8 +3,8 @@
  * Marketing Website - Vercel Serverless Function
  *
  * Sends SMS to manager's phone with signup link.
- * Uses same Twilio credentials as shiftcheck-app.
- * Updates shared database so both dashboards stay in sync.
+ * Uses TWILIO_PHONE_NUMBER directly (NOT Messaging Service).
+ * Updated: Dec 9, 2025 - Fixed 21704 error by removing MessagingServiceSid
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
