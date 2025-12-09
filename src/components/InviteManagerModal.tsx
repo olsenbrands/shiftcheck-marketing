@@ -197,7 +197,7 @@ export default function InviteManagerModal({
                     <span className="font-medium">{restaurant.name}</span> on
                     ShiftCheck. Complete your signup here:{' '}
                     <span className="text-emerald-600 underline">
-                      shiftcheck.app/manager/signup
+                      app.shiftcheck.app/manager/signup
                     </span>
                   </p>
                 </div>

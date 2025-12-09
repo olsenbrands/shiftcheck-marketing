@@ -493,7 +493,7 @@ export async function sendManagerInvitationSms(
   const normalizedPhone = normalizePhone(phone);
 
   // Generate signup link
-  const signupLink = `https://shiftcheck.app/manager/signup?phone=${encodeURIComponent(normalizedPhone)}`;
+  const signupLink = `https://app.shiftcheck.app/manager/signup?phone=${encodeURIComponent(normalizedPhone)}`;
 
   // Build message (matches shiftcheck-app template)
   const message = `Hi ${managerFirstName}! You've been invited to manage ${restaurantName} on ShiftCheck. Complete your signup here: ${signupLink}`;
@@ -508,7 +508,26 @@ export async function sendManagerInvitationSms(
       })
     });
 
-    const result = await response.json();
+    // Handle empty responses (e.g., when API server isn't running)
+    const text = await response.text();
+    if (!text) {
+      return {
+        success: false,
+        error: 'SMS service unavailable. In development, run: npm run dev:api'
+      };
+    }
+
+    // Parse JSON safely
+    let result;
+    try {
+      result = JSON.parse(text);
+    } catch {
+      console.error('Invalid JSON response:', text);
+      return {
+        success: false,
+        error: 'Invalid response from SMS service'
+      };
+    }
 
     if (!response.ok) {
       return {
@@ -522,9 +541,10 @@ export async function sendManagerInvitationSms(
       messageSid: result.messageSid
     };
   } catch (error) {
+    console.error('SMS send error:', error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Network error'
+      error: error instanceof Error ? error.message : 'Network error sending SMS'
     };
   }
 }
