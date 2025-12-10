@@ -11,6 +11,7 @@ import { Mail, Lock, Eye, EyeOff, Loader2, CheckCircle, AlertCircle } from 'luci
 import { signUp } from '../../services/authService';
 import { extractReferralCodeFromURL } from '../../utils/referral';
 import { getSupabaseAuthErrorMessage, getNetworkErrorMessage, getDuplicateEmailMessage } from '../../utils/errorMessages';
+import ShiftCheckLogo from '../../components/ShiftCheckLogo';
 
 export default function SignUpPage() {
   const [searchParams] = useSearchParams();
@@ -145,7 +146,12 @@ export default function SignUpPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+        {/* Logo */}
+        <div className="flex justify-center mb-6">
+          <ShiftCheckLogo size="md" showText={true} showTagline={true} />
+        </div>
+
+        <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
           Create your account
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">

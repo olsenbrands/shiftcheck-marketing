@@ -17,6 +17,7 @@ import { useSignupProgress, checkIncompleteSignup } from '../../hooks/useSignupP
 import ResumeSignupModal from '../../components/ResumeSignupModal';
 import SessionExpiredModal from '../../components/SessionExpiredModal';
 import { getBrevoErrorMessage, getNetworkErrorMessage } from '../../utils/errorMessages';
+import ShiftCheckLogo from '../../components/ShiftCheckLogo';
 
 // Email validation regex
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -315,13 +316,18 @@ export default function VerifyEmailPage() {
 
       <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+          {/* Logo */}
+          <div className="flex justify-center mb-6">
+            <ShiftCheckLogo size="md" showText={true} showTagline={true} />
+          </div>
+
+          <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
             Get started with ShiftCheck
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Enter your email to begin setting up your account
-        </p>
-      </div>
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Enter your email to begin setting up your account
+          </p>
+        </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow-lg sm:rounded-xl sm:px-10">
