@@ -127,7 +127,7 @@ export default function ReferralsPage() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="animate-spin h-8 w-8 text-emerald-600" />
+        <Loader2 className="animate-spin h-8 w-8 text-primary-500" />
       </div>
     );
   }
@@ -162,7 +162,7 @@ export default function ReferralsPage() {
         </div>
 
         {/* How It Works */}
-        <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl shadow-lg p-6 mb-8 text-white">
+        <div className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-xl shadow-lg p-6 mb-8 text-white">
           <h2 className="text-xl font-bold mb-4 flex items-center">
             <Gift className="h-6 w-6 mr-2" />
             How Referrals Work
@@ -173,7 +173,7 @@ export default function ReferralsPage() {
                 <span className="text-xl font-bold">1</span>
               </div>
               <h3 className="font-semibold mb-1">Share Your Code</h3>
-              <p className="text-sm text-emerald-100">
+              <p className="text-sm text-primary-100">
                 Give friends your unique referral code
               </p>
             </div>
@@ -182,7 +182,7 @@ export default function ReferralsPage() {
                 <span className="text-xl font-bold">2</span>
               </div>
               <h3 className="font-semibold mb-1">They Sign Up</h3>
-              <p className="text-sm text-emerald-100">
+              <p className="text-sm text-primary-100">
                 They get 10% off their first month
               </p>
             </div>
@@ -191,7 +191,7 @@ export default function ReferralsPage() {
                 <span className="text-xl font-bold">3</span>
               </div>
               <h3 className="font-semibold mb-1">You Earn</h3>
-              <p className="text-sm text-emerald-100">
+              <p className="text-sm text-primary-100">
                 You get 10% off your next month
               </p>
             </div>
@@ -202,7 +202,7 @@ export default function ReferralsPage() {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900 flex items-center">
-              <Users className="h-5 w-5 mr-2 text-emerald-600" />
+              <Users className="h-5 w-5 mr-2 text-primary-500" />
               Your Referral Code
             </h2>
           </div>
@@ -218,7 +218,7 @@ export default function ReferralsPage() {
                 </div>
                 <button
                   onClick={handleCopyCode}
-                  className="px-4 py-3 bg-emerald-600 text-white rounded-r-lg hover:bg-emerald-700 transition-colors flex items-center"
+                  className="px-4 py-3 bg-primary-500 text-white rounded-r-lg hover:bg-primary-600 transition-colors flex items-center"
                 >
                   {copied === 'code' ? (
                     <>
@@ -246,7 +246,7 @@ export default function ReferralsPage() {
                 </div>
                 <button
                   onClick={handleCopyLink}
-                  className="px-4 py-3 bg-emerald-600 text-white rounded-r-lg hover:bg-emerald-700 transition-colors flex items-center"
+                  className="px-4 py-3 bg-primary-500 text-white rounded-r-lg hover:bg-primary-600 transition-colors flex items-center"
                 >
                   {copied === 'link' ? (
                     <>
@@ -266,7 +266,7 @@ export default function ReferralsPage() {
             {/* Share Button */}
             <button
               onClick={handleShare}
-              className="w-full flex items-center justify-center px-6 py-3 bg-emerald-50 text-emerald-600 rounded-lg font-medium hover:bg-emerald-100 transition-colors"
+              className="w-full flex items-center justify-center px-6 py-3 bg-primary-50 text-primary-500 rounded-lg font-medium hover:bg-primary-100 transition-colors"
             >
               <Share2 className="h-5 w-5 mr-2" />
               Share via...
@@ -278,7 +278,7 @@ export default function ReferralsPage() {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900 flex items-center">
-              <DollarSign className="h-5 w-5 mr-2 text-emerald-600" />
+              <DollarSign className="h-5 w-5 mr-2 text-primary-500" />
               Your Rewards
             </h2>
           </div>
@@ -291,7 +291,7 @@ export default function ReferralsPage() {
                 <p className="text-sm text-gray-500">Referrals Made</p>
               </div>
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-3xl font-bold text-emerald-600">
+                <p className="text-3xl font-bold text-primary-500">
                   ${((stats?.totalDiscountEarned || 0) / 100).toFixed(2)}
                 </p>
                 <p className="text-sm text-gray-500">Total Savings</p>
@@ -315,7 +315,7 @@ export default function ReferralsPage() {
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
             <div className="px-6 py-4 border-b border-gray-200">
               <h2 className="text-lg font-semibold text-gray-900 flex items-center">
-                <Users className="h-5 w-5 mr-2 text-emerald-600" />
+                <Users className="h-5 w-5 mr-2 text-primary-500" />
                 Your Referrals
               </h2>
             </div>
@@ -340,7 +340,7 @@ export default function ReferralsPage() {
                     </div>
                     <div className="text-right">
                       {referral.discount_applied ? (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-700">
                           Discount Applied: ${((referral.discount_amount_cents || 0) / 100).toFixed(2)}
                         </span>
                       ) : isExpired ? (
@@ -369,10 +369,10 @@ export default function ReferralsPage() {
 
         {/* Active Discounts */}
         {stats && stats.activeDiscounts > 0 && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 mb-8">
+          <div className="bg-primary-50 border border-primary-200 rounded-xl p-6 mb-8">
             <div className="flex items-center mb-4">
-              <Gift className="h-6 w-6 text-emerald-600 mr-3" />
-              <h3 className="font-semibold text-emerald-800">
+              <Gift className="h-6 w-6 text-primary-500 mr-3" />
+              <h3 className="font-semibold text-primary-800">
                 You have {stats.activeDiscounts} active discount{stats.activeDiscounts !== 1 ? 's' : ''}!
               </h3>
             </div>
@@ -396,14 +396,14 @@ export default function ReferralsPage() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-emerald-600">
+                      <p className="text-sm font-medium text-primary-500">
                         Expires: {new Date(referral.discount_expires_at!).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
                 ))}
             </div>
-            <p className="mt-4 text-sm text-emerald-700">
+            <p className="mt-4 text-sm text-primary-700">
               Discounts are automatically applied to your next billing cycle
             </p>
           </div>
@@ -411,12 +411,12 @@ export default function ReferralsPage() {
 
         {/* Referred By */}
         {owner?.referred_by_code && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6">
+          <div className="bg-primary-50 border border-primary-200 rounded-xl p-6">
             <div className="flex items-center">
-              <Gift className="h-8 w-8 text-emerald-600 mr-4" />
+              <Gift className="h-8 w-8 text-primary-500 mr-4" />
               <div>
-                <h3 className="font-semibold text-emerald-800">You were referred!</h3>
-                <p className="text-sm text-emerald-700">
+                <h3 className="font-semibold text-primary-800">You were referred!</h3>
+                <p className="text-sm text-primary-700">
                   You signed up with referral code: {owner.referred_by_code}
                 </p>
               </div>

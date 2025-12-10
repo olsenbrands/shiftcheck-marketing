@@ -146,7 +146,7 @@ export default function AccountRestaurantsPage() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="animate-spin h-8 w-8 text-emerald-600" />
+        <Loader2 className="animate-spin h-8 w-8 text-primary-500" />
       </div>
     );
   }
@@ -178,7 +178,7 @@ export default function AccountRestaurantsPage() {
           </div>
           <Link
             to="/signup/restaurants"
-            className="flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
+            className="flex items-center px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors"
           >
             <Plus className="h-5 w-5 mr-2" />
             Add Restaurant
@@ -228,21 +228,21 @@ export default function AccountRestaurantsPage() {
               key={restaurant.id}
               className={`bg-white rounded-xl shadow-sm border p-6 transition-all ${
                 restaurant.is_active
-                  ? 'border-emerald-200 bg-emerald-50/30'
+                  ? 'border-primary-200 bg-primary-50/30'
                   : 'border-gray-200'
               }`}
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center">
-                    <Store className="h-5 w-5 text-emerald-600 mr-2" />
+                    <Store className="h-5 w-5 text-primary-500 mr-2" />
                     <h3 className="text-lg font-semibold text-gray-900">
                       {restaurant.name}
                     </h3>
                     <span
                       className={`ml-3 px-2 py-1 rounded-full text-xs font-medium ${
                         restaurant.is_active
-                          ? 'bg-emerald-100 text-emerald-700'
+                          ? 'bg-primary-100 text-primary-700'
                           : 'bg-gray-100 text-gray-600'
                       }`}
                     >
@@ -277,11 +277,11 @@ export default function AccountRestaurantsPage() {
 
                         {/* Invite Manager Badge */}
                         {restaurant.is_owner_managed ? (
-                          <span className="px-2 py-0.5 text-xs font-medium text-emerald-600 bg-emerald-50 rounded-full">
+                          <span className="px-2 py-0.5 text-xs font-medium text-primary-500 bg-primary-50 rounded-full">
                             Owner Managed
                           </span>
                         ) : restaurant.invitation_sent ? (
-                          <span className="px-2 py-0.5 text-xs font-medium text-emerald-700 bg-emerald-100 rounded-full flex items-center">
+                          <span className="px-2 py-0.5 text-xs font-medium text-primary-700 bg-primary-100 rounded-full flex items-center">
                             <CheckCircle className="h-3 w-3 mr-1" />
                             Invited
                           </span>
@@ -306,7 +306,7 @@ export default function AccountRestaurantsPage() {
                     disabled={toggling === restaurant.id}
                     className={`flex items-center px-3 py-2 rounded-lg transition-colors ${
                       restaurant.is_active
-                        ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                        ? 'bg-primary-100 text-primary-700 hover:bg-primary-200'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     } disabled:opacity-50`}
                     title={restaurant.is_active ? 'Deactivate' : 'Activate'}
@@ -323,7 +323,7 @@ export default function AccountRestaurantsPage() {
                   {/* Edit Button */}
                   <button
                     onClick={() => navigate(`/signup/restaurants?edit=${restaurant.id}`)}
-                    className="p-2 text-gray-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                    className="p-2 text-gray-500 hover:text-primary-500 hover:bg-primary-50 rounded-lg transition-colors"
                     title="Edit restaurant"
                   >
                     <Pencil className="h-5 w-5" />
@@ -350,7 +350,7 @@ export default function AccountRestaurantsPage() {
             <p className="text-gray-500 mb-4">Add your first restaurant to get started</p>
             <Link
               to="/signup/restaurants"
-              className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+              className="inline-flex items-center px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600"
             >
               <Plus className="h-5 w-5 mr-2" />
               Add Restaurant

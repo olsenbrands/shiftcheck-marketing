@@ -142,8 +142,8 @@ export default function InviteManagerModal({
           {/* Success State */}
           {success ? (
             <div className="text-center py-8">
-              <div className="mx-auto w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
-                <CheckCircle className="h-8 w-8 text-emerald-600" />
+              <div className="mx-auto w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mb-4">
+                <CheckCircle className="h-8 w-8 text-primary-500" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
                 Invitation Sent!
@@ -191,12 +191,12 @@ export default function InviteManagerModal({
                   <MessageSquare className="h-4 w-4 mr-2" />
                   Message Preview
                 </div>
-                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                <div className="bg-primary-50 border border-primary-200 rounded-xl p-4">
                   <p className="text-sm text-gray-700">
                     Hi {managerFirstName}! You've been invited to manage{' '}
                     <span className="font-medium">{restaurant.name}</span> on
                     ShiftCheck. Complete your signup here:{' '}
-                    <span className="text-emerald-600 underline">
+                    <span className="text-primary-500 underline">
                       app.shiftcheck.app/manager/signup
                     </span>
                   </p>
@@ -238,7 +238,7 @@ export default function InviteManagerModal({
                 <button
                   onClick={handleSendInvitation}
                   disabled={sending || !managerPhone}
-                  className="flex-1 px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                  className="flex-1 px-4 py-3 bg-primary-500 text-white rounded-xl font-medium hover:bg-primary-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                 >
                   {sending ? (
                     <>

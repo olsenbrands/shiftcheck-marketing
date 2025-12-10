@@ -168,7 +168,7 @@ export default function PlanPage() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="animate-spin h-8 w-8 text-emerald-600" />
+        <Loader2 className="animate-spin h-8 w-8 text-primary-500" />
       </div>
     );
   }
@@ -180,31 +180,31 @@ export default function PlanPage() {
         <div className="mb-8">
           <div className="flex items-center justify-center space-x-2">
             <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-medium">
+              <div className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-medium">
                 <Check className="h-4 w-4" />
               </div>
-              <span className="ml-2 text-sm font-medium text-emerald-600 hidden sm:inline">Account</span>
+              <span className="ml-2 text-sm font-medium text-primary-500 hidden sm:inline">Account</span>
             </div>
-            <div className="w-8 sm:w-12 h-0.5 bg-emerald-600"></div>
+            <div className="w-8 sm:w-12 h-0.5 bg-primary-500"></div>
             <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-medium">
+              <div className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-medium">
                 <Check className="h-4 w-4" />
               </div>
-              <span className="ml-2 text-sm font-medium text-emerald-600 hidden sm:inline">Profile</span>
+              <span className="ml-2 text-sm font-medium text-primary-500 hidden sm:inline">Profile</span>
             </div>
-            <div className="w-8 sm:w-12 h-0.5 bg-emerald-600"></div>
+            <div className="w-8 sm:w-12 h-0.5 bg-primary-500"></div>
             <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-medium">
+              <div className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-medium">
                 <Check className="h-4 w-4" />
               </div>
-              <span className="ml-2 text-sm font-medium text-emerald-600 hidden sm:inline">Restaurants</span>
+              <span className="ml-2 text-sm font-medium text-primary-500 hidden sm:inline">Restaurants</span>
             </div>
-            <div className="w-8 sm:w-12 h-0.5 bg-emerald-600"></div>
+            <div className="w-8 sm:w-12 h-0.5 bg-primary-500"></div>
             <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-medium">
+              <div className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-medium">
                 4
               </div>
-              <span className="ml-2 text-sm font-medium text-emerald-600 hidden sm:inline">Plan</span>
+              <span className="ml-2 text-sm font-medium text-primary-500 hidden sm:inline">Plan</span>
             </div>
           </div>
         </div>
@@ -251,13 +251,13 @@ export default function PlanPage() {
                 }}
                 className={`relative rounded-2xl border-2 p-6 cursor-pointer transition-all ${
                   isSelected
-                    ? 'border-emerald-500 bg-emerald-50 ring-2 ring-emerald-500'
-                    : 'border-gray-200 bg-white hover:border-emerald-300'
+                    ? 'border-primary-500 bg-primary-50 ring-2 ring-primary-500'
+                    : 'border-gray-200 bg-white hover:border-primary-300'
                 }`}
               >
                 {recommendation && (
                   <div className="absolute -top-3 left-0 right-0 flex justify-center">
-                    <span className="bg-emerald-500 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap shadow-sm">
+                    <span className="bg-primary-500 text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap shadow-sm">
                       {recommendation}
                     </span>
                   </div>
@@ -293,7 +293,7 @@ export default function PlanPage() {
                         : feature;
                       return (
                         <li key={index} className="flex items-start">
-                          <Check className="h-5 w-5 text-emerald-500 shrink-0" />
+                          <Check className="h-5 w-5 text-primary-600 shrink-0" />
                           <span className="ml-2 text-sm text-gray-600">{displayFeature}</span>
                         </li>
                       );
@@ -442,7 +442,7 @@ export default function PlanPage() {
                           onClick={() => canToggle && handleToggleRestaurant(restaurant.id)}
                           className={`flex items-center p-3 rounded-lg border transition-all ${
                             isActive
-                              ? 'bg-emerald-50 border-emerald-200 cursor-pointer'
+                              ? 'bg-primary-50 border-primary-200 cursor-pointer'
                               : canToggle
                               ? 'bg-white border-gray-200 cursor-pointer hover:border-gray-300'
                               : 'bg-gray-100 border-gray-200 opacity-60 cursor-not-allowed'
@@ -450,7 +450,7 @@ export default function PlanPage() {
                         >
                           <div className={`w-5 h-5 rounded border-2 flex items-center justify-center mr-3 transition-colors ${
                             isActive
-                              ? 'bg-emerald-500 border-emerald-500'
+                              ? 'bg-primary-500 border-primary-500'
                               : 'bg-white border-gray-300'
                           }`}>
                             {isActive && <Check className="h-3 w-3 text-white" />}
@@ -465,7 +465,7 @@ export default function PlanPage() {
                           </div>
                           <span className={`text-xs font-medium px-2 py-1 rounded-full ${
                             isActive
-                              ? 'bg-emerald-100 text-emerald-700'
+                              ? 'bg-primary-100 text-primary-700'
                               : 'bg-gray-200 text-gray-500'
                           }`}>
                             {isActive ? 'Active' : 'Inactive'}
@@ -527,7 +527,7 @@ export default function PlanPage() {
             <div className="flex items-center justify-between border-t pt-4">
               <div>
                 <span className="text-gray-600">Monthly total:</span>
-                <span className="ml-2 text-2xl font-bold text-emerald-600">
+                <span className="ml-2 text-2xl font-bold text-primary-500">
                   {selectedTier === 'free_starter'
                     ? 'Free'
                     : formatPrice(calculateMonthlyTotal(tiers.find((t) => t.id === selectedTier)!))}
@@ -535,7 +535,7 @@ export default function PlanPage() {
               </div>
               <button
                 onClick={handleContinue}
-                className="flex items-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors"
+                className="flex items-center px-6 py-3 bg-primary-500 text-white rounded-lg font-medium hover:bg-primary-600 transition-colors"
               >
                 {selectedTier === 'free_starter' ? 'Start Free Trial' : 'Continue to Payment'}
                 <ArrowRight className="ml-2 h-4 w-4" />

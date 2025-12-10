@@ -74,7 +74,7 @@ export default function DashboardPage() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="animate-spin h-8 w-8 text-emerald-600" />
+        <Loader2 className="animate-spin h-8 w-8 text-primary-500" />
       </div>
     );
   }
@@ -91,7 +91,7 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Link to="/" className="text-2xl font-bold text-emerald-600">
+              <Link to="/" className="text-2xl font-bold text-primary-500">
                 ShiftCheck
               </Link>
               <span className="text-gray-400">|</span>
@@ -126,15 +126,15 @@ export default function DashboardPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">Active Restaurants</p>
-                <p className="mt-1 text-3xl font-bold text-emerald-600">
+                <p className="mt-1 text-3xl font-bold text-primary-500">
                   {activeRestaurants.length}
                   <span className="text-lg text-gray-400 font-normal">
                     /{restaurants.length}
                   </span>
                 </p>
               </div>
-              <div className="h-12 w-12 rounded-full bg-emerald-100 flex items-center justify-center">
-                <Store className="h-6 w-6 text-emerald-600" />
+              <div className="h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center">
+                <Store className="h-6 w-6 text-primary-500" />
               </div>
             </div>
           </div>
@@ -176,61 +176,61 @@ export default function DashboardPage() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Link
             to="/account/restaurants"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:border-emerald-300 hover:shadow-md transition-all group"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:border-primary-300 hover:shadow-md transition-all group"
           >
-            <Store className="h-8 w-8 text-emerald-600 mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-emerald-600">
+            <Store className="h-8 w-8 text-primary-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary-500">
               Restaurants
             </h3>
             <p className="mt-1 text-sm text-gray-500">
               Manage restaurants and toggle active status
             </p>
-            <div className="mt-4 flex items-center text-emerald-600 text-sm font-medium">
+            <div className="mt-4 flex items-center text-primary-500 text-sm font-medium">
               Manage <ArrowRight className="ml-2 h-4 w-4" />
             </div>
           </Link>
 
           <Link
             to="/account/subscription"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:border-emerald-300 hover:shadow-md transition-all group"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:border-primary-300 hover:shadow-md transition-all group"
           >
-            <CreditCard className="h-8 w-8 text-emerald-600 mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-emerald-600">
+            <CreditCard className="h-8 w-8 text-primary-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary-500">
               Subscription
             </h3>
             <p className="mt-1 text-sm text-gray-500">
               View plan, billing history, and payment methods
             </p>
-            <div className="mt-4 flex items-center text-emerald-600 text-sm font-medium">
+            <div className="mt-4 flex items-center text-primary-500 text-sm font-medium">
               Manage <ArrowRight className="ml-2 h-4 w-4" />
             </div>
           </Link>
 
           <Link
             to="/account/referrals"
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:border-emerald-300 hover:shadow-md transition-all group"
+            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:border-primary-300 hover:shadow-md transition-all group"
           >
-            <Users className="h-8 w-8 text-emerald-600 mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-emerald-600">
+            <Users className="h-8 w-8 text-primary-500 mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary-500">
               Referrals
             </h3>
             <p className="mt-1 text-sm text-gray-500">
               Share your code and earn discounts
             </p>
-            <div className="mt-4 flex items-center text-emerald-600 text-sm font-medium">
+            <div className="mt-4 flex items-center text-primary-500 text-sm font-medium">
               View <ArrowRight className="ml-2 h-4 w-4" />
             </div>
           </Link>
 
           <a
             href="#download"
-            className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-sm p-6 hover:shadow-md transition-all group text-white"
+            className="bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl shadow-sm p-6 hover:shadow-md transition-all group text-white"
           >
             <Download className="h-8 w-8 mb-4" />
             <h3 className="text-lg font-semibold">
               Download App
             </h3>
-            <p className="mt-1 text-sm text-emerald-100">
+            <p className="mt-1 text-sm text-primary-100">
               Get ShiftCheck for your team
             </p>
             <div className="mt-4 flex items-center text-white text-sm font-medium">
@@ -247,23 +247,23 @@ export default function DashboardPage() {
           <div className="p-6">
             <ul className="space-y-4">
               <li className="flex items-center">
-                <CheckCircle className="h-5 w-5 text-emerald-500 mr-3" />
+                <CheckCircle className="h-5 w-5 text-primary-600 mr-3" />
                 <span className="text-gray-600">Email verified: {owner?.email}</span>
               </li>
               <li className="flex items-center">
-                <CheckCircle className="h-5 w-5 text-emerald-500 mr-3" />
+                <CheckCircle className="h-5 w-5 text-primary-600 mr-3" />
                 <span className="text-gray-600">
                   {restaurants.length} restaurant{restaurants.length !== 1 ? 's' : ''} created
                 </span>
               </li>
               <li className="flex items-center">
-                <CheckCircle className="h-5 w-5 text-emerald-500 mr-3" />
+                <CheckCircle className="h-5 w-5 text-primary-600 mr-3" />
                 <span className="text-gray-600">
                   Subscription: {subscription?.status || 'Not active'}
                 </span>
               </li>
               <li className="flex items-center">
-                <CheckCircle className="h-5 w-5 text-emerald-500 mr-3" />
+                <CheckCircle className="h-5 w-5 text-primary-600 mr-3" />
                 <span className="text-gray-600">
                   Referral code: {owner?.referral_code}
                 </span>

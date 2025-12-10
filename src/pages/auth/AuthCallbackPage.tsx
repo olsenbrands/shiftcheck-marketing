@@ -201,7 +201,7 @@ export default function AuthCallbackPage() {
               </p>
               <button
                 onClick={() => navigate('/auth/signup')}
-                className="mt-6 w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+                className="mt-6 w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 Continue to sign up
               </button>
@@ -266,7 +266,7 @@ export default function AuthCallbackPage() {
                   <button
                     onClick={handleResendVerification}
                     disabled={resendLoading || resendCooldown > 0}
-                    className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {resendLoading ? (
                       <>
@@ -288,7 +288,7 @@ export default function AuthCallbackPage() {
                 {!canResend && (
                   <Link
                     to="/signup/verify-email"
-                    className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+                    className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                   >
                     <Mail className="h-5 w-5 mr-2" />
                     Start over with new email
@@ -298,7 +298,7 @@ export default function AuthCallbackPage() {
                 {/* Sign In Link */}
                 <Link
                   to="/auth/login"
-                  className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+                  className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                 >
                   Already have an account? Sign in
                 </Link>
@@ -322,7 +322,7 @@ export default function AuthCallbackPage() {
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow-lg sm:rounded-xl sm:px-10">
           <div className="text-center">
-            <Loader2 className="animate-spin h-8 w-8 mx-auto text-emerald-600" />
+            <Loader2 className="animate-spin h-8 w-8 mx-auto text-primary-500" />
             <p className="mt-4 text-sm text-gray-600">Verifying your account...</p>
           </div>
         </div>

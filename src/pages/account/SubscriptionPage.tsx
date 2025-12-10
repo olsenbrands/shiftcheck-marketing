@@ -93,7 +93,7 @@ export default function SubscriptionPage() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="animate-spin h-8 w-8 text-emerald-600" />
+        <Loader2 className="animate-spin h-8 w-8 text-primary-500" />
       </div>
     );
   }
@@ -108,7 +108,7 @@ export default function SubscriptionPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'active':
-        return 'bg-emerald-100 text-emerald-700';
+        return 'bg-primary-100 text-primary-700';
       case 'trialing':
         return 'bg-blue-100 text-blue-700';
       case 'past_due':
@@ -175,7 +175,7 @@ export default function SubscriptionPage() {
 
         {/* Current Plan */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
-          <div className="px-6 py-4 bg-emerald-600">
+          <div className="px-6 py-4 bg-primary-500">
             <h2 className="text-lg font-semibold text-white flex items-center">
               <CreditCard className="h-5 w-5 mr-2" />
               Current Plan
@@ -211,7 +211,7 @@ export default function SubscriptionPage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Monthly Cost</p>
-                    <p className="text-lg font-semibold text-emerald-600">
+                    <p className="text-lg font-semibold text-primary-500">
                       {currentTier?.price_per_restaurant_cents === 0
                         ? 'Free'
                         : `${formatPrice(monthlyTotal)}/mo`}
@@ -242,7 +242,7 @@ export default function SubscriptionPage() {
                     <ul className="grid md:grid-cols-2 gap-2">
                       {currentTier.features.map((feature, index) => (
                         <li key={index} className="flex items-center text-sm text-gray-600">
-                          <CheckCircle className="h-4 w-4 text-emerald-500 mr-2 shrink-0" />
+                          <CheckCircle className="h-4 w-4 text-primary-600 mr-2 shrink-0" />
                           {feature}
                         </li>
                       ))}
@@ -257,7 +257,7 @@ export default function SubscriptionPage() {
                 <p className="text-gray-500 mb-4">Choose a plan to activate your restaurants</p>
                 <Link
                   to="/signup/plan"
-                  className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+                  className="inline-flex items-center px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600"
                 >
                   Choose a Plan
                 </Link>
@@ -268,17 +268,17 @@ export default function SubscriptionPage() {
 
         {/* Upgrade Options */}
         {subscription && subscription.plan_type !== 'expand' && (
-          <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl shadow-lg p-6 mb-8 text-white">
+          <div className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-xl shadow-lg p-6 mb-8 text-white">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-xl font-bold mb-1">Need more restaurants?</h3>
-                <p className="text-emerald-100">
+                <p className="text-primary-100">
                   Upgrade your plan to manage more locations
                 </p>
               </div>
               <Link
                 to="/signup/plan"
-                className="flex items-center px-4 py-2 bg-white text-emerald-600 rounded-lg font-medium hover:bg-emerald-50 transition-colors"
+                className="flex items-center px-4 py-2 bg-white text-primary-500 rounded-lg font-medium hover:bg-primary-50 transition-colors"
               >
                 Upgrade Plan
                 <ArrowUpRight className="ml-2 h-4 w-4" />
@@ -320,7 +320,7 @@ export default function SubscriptionPage() {
                 <button
                   onClick={handleOpenPortal}
                   disabled={portalLoading}
-                  className="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-medium disabled:opacity-50"
+                  className="inline-flex items-center text-primary-500 hover:text-primary-700 font-medium disabled:opacity-50"
                 >
                   {portalLoading ? (
                     <>
@@ -367,7 +367,7 @@ export default function SubscriptionPage() {
                         <span
                           className={`ml-3 px-2 py-0.5 rounded-full text-xs font-medium ${
                             invoice.status === 'paid'
-                              ? 'bg-emerald-100 text-emerald-700'
+                              ? 'bg-primary-100 text-primary-700'
                               : invoice.status === 'open'
                               ? 'bg-yellow-100 text-yellow-700'
                               : 'bg-gray-100 text-gray-600'
@@ -387,7 +387,7 @@ export default function SubscriptionPage() {
                           href={invoice.hosted_invoice_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+                          className="text-sm text-primary-500 hover:text-primary-700 font-medium"
                         >
                           View
                         </a>
@@ -426,14 +426,14 @@ export default function SubscriptionPage() {
                     key={tier.id}
                     className={`rounded-xl border-2 p-4 ${
                       isCurrentPlan
-                        ? 'border-emerald-500 bg-emerald-50'
+                        ? 'border-primary-500 bg-primary-50'
                         : 'border-gray-200'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="font-semibold text-gray-900">{tier.name}</h3>
                       {isCurrentPlan && (
-                        <span className="text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                        <span className="text-xs font-medium text-primary-500 bg-primary-100 px-2 py-1 rounded-full">
                           Current
                         </span>
                       )}

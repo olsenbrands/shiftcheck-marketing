@@ -7,7 +7,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Store, Phone, MapPin, User, Plus, Trash2, Check, Loader2, ArrowRight, Pencil } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { getOwnerProfile, type Owner } from '../../services/ownerService';
@@ -40,6 +40,7 @@ const clearRestaurantsFromStorage = () => {
 
 export default function RestaurantsPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { user, loading: authLoading } = useAuth();
 
   const [owner, setOwner] = useState<Owner | null>(null);
@@ -116,6 +117,26 @@ export default function RestaurantsPage() {
       saveRestaurantsToStorage(restaurants);
     }
   }, [restaurants]);
+
+  // Auto-open edit form from URL ?edit=<id> parameter
+  useEffect(() => {
+    const editId = searchParams.get('edit');
+    if (editId && restaurants.length > 0 && !loading) {
+      const restaurantToEdit = restaurants.find(r => r.id === editId);
+      if (restaurantToEdit) {
+        // Use the existing handleEditRestaurant logic inline to avoid dependency issues
+        setName(restaurantToEdit.name);
+        setAddress(restaurantToEdit.address || restaurantToEdit.restaurant_address || '');
+        setRestaurantPhone(formatPhoneForDisplay(restaurantToEdit.manager_phone || restaurantToEdit.restaurant_phone || ''));
+        setManagerName(restaurantToEdit.manager_name || '');
+        setManagerPhone(formatPhoneForDisplay(restaurantToEdit.manager_phone || ''));
+        setIsOwnerManaged(restaurantToEdit.is_owner_managed || false);
+        setEditingRestaurantId(restaurantToEdit.id);
+        setShowForm(true);
+        setError(null);
+      }
+    }
+  }, [searchParams, restaurants, loading]);
 
   const resetForm = () => {
     setName('');
@@ -260,7 +281,7 @@ export default function RestaurantsPage() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="animate-spin h-8 w-8 text-emerald-600" />
+        <Loader2 className="animate-spin h-8 w-8 text-primary-500" />
       </div>
     );
   }
@@ -272,24 +293,24 @@ export default function RestaurantsPage() {
         <div className="mb-8">
           <div className="flex items-center justify-center space-x-2">
             <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-medium">
+              <div className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-medium">
                 <Check className="h-4 w-4" />
               </div>
-              <span className="ml-2 text-sm font-medium text-emerald-600">Account</span>
+              <span className="ml-2 text-sm font-medium text-primary-500">Account</span>
             </div>
-            <div className="w-12 h-0.5 bg-emerald-600"></div>
+            <div className="w-12 h-0.5 bg-primary-500"></div>
             <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-medium">
+              <div className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-medium">
                 <Check className="h-4 w-4" />
               </div>
-              <span className="ml-2 text-sm font-medium text-emerald-600">Profile</span>
+              <span className="ml-2 text-sm font-medium text-primary-500">Profile</span>
             </div>
-            <div className="w-12 h-0.5 bg-emerald-600"></div>
+            <div className="w-12 h-0.5 bg-primary-500"></div>
             <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-medium">
+              <div className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-medium">
                 3
               </div>
-              <span className="ml-2 text-sm font-medium text-emerald-600">Restaurants</span>
+              <span className="ml-2 text-sm font-medium text-primary-500">Restaurants</span>
             </div>
           </div>
         </div>
@@ -324,7 +345,7 @@ export default function RestaurantsPage() {
                   <div className="flex space-x-1">
                     <button
                       onClick={() => handleEditRestaurant(restaurant)}
-                      className="text-gray-500 hover:text-emerald-600 p-2"
+                      className="text-gray-500 hover:text-primary-500 p-2"
                       title="Edit restaurant"
                     >
                       <Pencil className="h-5 w-5" />
@@ -372,7 +393,7 @@ export default function RestaurantsPage() {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500"
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
                     placeholder="Downtown Location"
                   />
                 </div>
@@ -388,7 +409,7 @@ export default function RestaurantsPage() {
                     type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500"
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
                     placeholder="123 Main St, City, State 12345"
                   />
                 </div>
@@ -403,8 +424,8 @@ export default function RestaurantsPage() {
                   <input
                     type="tel"
                     value={restaurantPhone}
-                    onChange={(e) => setRestaurantPhone(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500"
+                    onChange={(e) => setRestaurantPhone(formatPhoneForDisplay(e.target.value))}
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
                     placeholder="(801) 555-1234"
                   />
                 </div>
@@ -419,7 +440,7 @@ export default function RestaurantsPage() {
                       type="checkbox"
                       checked={isOwnerManaged}
                       onChange={(e) => setIsOwnerManaged(e.target.checked)}
-                      className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-primary-500 focus:ring-primary-500 border-gray-300 rounded"
                     />
                     <span className="ml-2 text-sm text-gray-600">I'll manage this restaurant</span>
                   </label>
@@ -433,7 +454,7 @@ export default function RestaurantsPage() {
                       value={managerName}
                       onChange={(e) => setManagerName(e.target.value)}
                       disabled={isOwnerManaged}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                     />
                   </div>
                   <div>
@@ -441,9 +462,9 @@ export default function RestaurantsPage() {
                     <input
                       type="tel"
                       value={managerPhone}
-                      onChange={(e) => setManagerPhone(e.target.value)}
+                      onChange={(e) => setManagerPhone(formatPhoneForDisplay(e.target.value))}
                       disabled={isOwnerManaged}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                       placeholder="(801) 555-5678"
                     />
                   </div>
@@ -466,7 +487,7 @@ export default function RestaurantsPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="flex-1 flex justify-center items-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50"
+                  className="flex-1 flex justify-center items-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 disabled:opacity-50"
                 >
                   {saving ? (
                     <Loader2 className="animate-spin h-5 w-5" />
@@ -488,7 +509,7 @@ export default function RestaurantsPage() {
         ) : (
           <button
             onClick={() => setShowForm(true)}
-            className="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-emerald-500 hover:text-emerald-600 flex items-center justify-center mb-6"
+            className="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-primary-500 hover:text-primary-500 flex items-center justify-center mb-6"
           >
             <Plus className="mr-2 h-5 w-5" />
             Add Another Restaurant
@@ -499,13 +520,13 @@ export default function RestaurantsPage() {
         <div className="bg-white rounded-xl shadow-lg p-6">
           <div className="flex items-center justify-between mb-4">
             <span className="text-gray-600">Restaurants added:</span>
-            <span className="text-2xl font-bold text-emerald-600">{restaurants.length}</span>
+            <span className="text-2xl font-bold text-primary-500">{restaurants.length}</span>
           </div>
 
           <button
             onClick={handleContinue}
             disabled={restaurants.length === 0}
-            className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Continue to Plan Selection
             <ArrowRight className="ml-2 h-4 w-4" />

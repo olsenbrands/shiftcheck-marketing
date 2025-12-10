@@ -241,7 +241,7 @@ export default function ProfilePage() {
   if (authLoading || checkingProfile) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="animate-spin h-8 w-8 text-emerald-600" />
+        <Loader2 className="animate-spin h-8 w-8 text-primary-500" />
       </div>
     );
   }
@@ -253,23 +253,23 @@ export default function ProfilePage() {
         <div className="mb-8">
           <div className="flex items-center justify-center space-x-2">
             <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-medium">
+              <div className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-medium">
                 1
               </div>
-              <span className="ml-2 text-sm font-medium text-emerald-600">Account</span>
+              <span className="ml-2 text-sm font-medium text-primary-500">Account</span>
             </div>
-            <div className="w-12 h-0.5 bg-emerald-600"></div>
+            <div className="w-12 h-0.5 bg-primary-500"></div>
             <div className="flex items-center">
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                step === 'personal' || step === 'billing' ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-gray-600'
+                step === 'personal' || step === 'billing' ? 'bg-primary-500 text-white' : 'bg-gray-200 text-gray-600'
               }`}>
                 2
               </div>
               <span className={`ml-2 text-sm font-medium ${
-                step === 'personal' || step === 'billing' ? 'text-emerald-600' : 'text-gray-500'
+                step === 'personal' || step === 'billing' ? 'text-primary-500' : 'text-gray-500'
               }`}>Profile</span>
             </div>
-            <div className={`w-12 h-0.5 ${step === 'billing' ? 'bg-emerald-600' : 'bg-gray-200'}`}></div>
+            <div className={`w-12 h-0.5 ${step === 'billing' ? 'bg-primary-500' : 'bg-gray-200'}`}></div>
             <div className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-sm font-medium">
                 3
@@ -283,8 +283,8 @@ export default function ProfilePage() {
           {step === 'personal' ? (
             <>
               <div className="text-center mb-6">
-                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100">
-                  <User className="h-6 w-6 text-emerald-600" />
+                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-primary-100">
+                  <User className="h-6 w-6 text-primary-500" />
                 </div>
                 <h2 className="mt-4 text-2xl font-bold text-gray-900">Personal Information</h2>
                 <p className="mt-2 text-sm text-gray-600">Tell us a bit about yourself</p>
@@ -308,7 +308,7 @@ export default function ProfilePage() {
                       required
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                     />
                   </div>
                   <div>
@@ -321,7 +321,7 @@ export default function ProfilePage() {
                       required
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                     />
                   </div>
                 </div>
@@ -340,7 +340,7 @@ export default function ProfilePage() {
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="block w-full pl-10 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                      className="block w-full pl-10 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                       placeholder="(801) 555-1234"
                     />
                   </div>
@@ -349,7 +349,7 @@ export default function ProfilePage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
+                  className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
                 >
                   {loading ? (
                     <Loader2 className="animate-spin h-5 w-5" />
@@ -365,8 +365,8 @@ export default function ProfilePage() {
           ) : (
             <>
               <div className="text-center mb-6">
-                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100">
-                  <Building2 className="h-6 w-6 text-emerald-600" />
+                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-primary-100">
+                  <Building2 className="h-6 w-6 text-primary-500" />
                 </div>
                 <h2 className="mt-4 text-2xl font-bold text-gray-900">Billing Address</h2>
                 <p className="mt-2 text-sm text-gray-600">For your subscription invoices</p>
@@ -393,7 +393,7 @@ export default function ProfilePage() {
                       required
                       value={street}
                       onChange={(e) => setStreet(e.target.value)}
-                      className="block w-full pl-10 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                      className="block w-full pl-10 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                       placeholder="123 Main Street"
                     />
                   </div>
@@ -410,7 +410,7 @@ export default function ProfilePage() {
                       required
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                     />
                   </div>
                   <div>
@@ -423,7 +423,7 @@ export default function ProfilePage() {
                       required
                       value={state}
                       onChange={(e) => setState(e.target.value)}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                       placeholder="UT"
                       maxLength={2}
                     />
@@ -441,7 +441,7 @@ export default function ProfilePage() {
                       required
                       value={zip}
                       onChange={(e) => setZip(e.target.value)}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                       placeholder="84041"
                       maxLength={10}
                     />
@@ -455,7 +455,7 @@ export default function ProfilePage() {
                       required
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                     >
                       <option value="US">United States</option>
                       <option value="CA">Canada</option>
@@ -470,7 +470,7 @@ export default function ProfilePage() {
                   <button
                     type="button"
                     onClick={() => setStep('personal')}
-                    className="flex-1 flex justify-center items-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+                    className="flex-1 flex justify-center items-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                   >
                     <ArrowLeft className="mr-2 h-4 w-4" />
                     Back
@@ -478,7 +478,7 @@ export default function ProfilePage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50"
+                    className="flex-1 flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
                   >
                     {loading ? (
                       <Loader2 className="animate-spin h-5 w-5" />

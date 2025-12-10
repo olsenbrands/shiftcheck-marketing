@@ -65,8 +65,8 @@ export default function ResumeSignupModal({
 
           {/* Header */}
           <div className="text-center mb-6">
-            <div className="mx-auto flex items-center justify-center h-14 w-14 rounded-full bg-emerald-100 mb-4">
-              <RefreshCw className="h-7 w-7 text-emerald-600" />
+            <div className="mx-auto flex items-center justify-center h-14 w-14 rounded-full bg-primary-100 mb-4">
+              <RefreshCw className="h-7 w-7 text-primary-500" />
             </div>
             <h2 className="text-xl font-bold text-gray-900">
               Welcome back!
@@ -85,13 +85,13 @@ export default function ResumeSignupModal({
           <div className="bg-gray-50 rounded-lg p-4 mb-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-gray-500">Your progress</span>
-              <span className="text-sm font-medium text-emerald-600">
+              <span className="text-sm font-medium text-primary-500">
                 Step {stepNumber} of 7
               </span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
               <div
-                className="bg-emerald-500 h-2 rounded-full transition-all"
+                className="bg-primary-500 h-2 rounded-full transition-all"
                 style={{ width: `${(stepNumber / 7) * 100}%` }}
               />
             </div>
@@ -104,7 +104,7 @@ export default function ResumeSignupModal({
           <div className="space-y-3">
             <button
               onClick={handleResume}
-              className="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors"
+              className="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
             >
               Continue where I left off
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -112,7 +112,7 @@ export default function ResumeSignupModal({
 
             <button
               onClick={handleStartFresh}
-              className="w-full flex items-center justify-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors"
+              className="w-full flex items-center justify-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
             >
               Start fresh
             </button>

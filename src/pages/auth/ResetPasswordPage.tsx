@@ -124,7 +124,7 @@ export default function ResetPasswordPage() {
       <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow-lg sm:rounded-xl sm:px-10 text-center">
-            <Loader2 className="animate-spin h-8 w-8 text-emerald-600 mx-auto mb-4" />
+            <Loader2 className="animate-spin h-8 w-8 text-primary-500 mx-auto mb-4" />
             <p className="text-gray-600">Verifying reset link...</p>
           </div>
         </div>
@@ -150,7 +150,7 @@ export default function ResetPasswordPage() {
               </p>
               <Link
                 to="/auth/forgot-password"
-                className="block w-full py-2 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 text-center"
+                className="block w-full py-2 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 text-center"
               >
                 Request new reset link
               </Link>
@@ -168,8 +168,8 @@ export default function ResetPasswordPage() {
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow-lg sm:rounded-xl sm:px-10">
             <div className="text-center">
-              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100 mb-4">
-                <CheckCircle className="h-6 w-6 text-emerald-600" />
+              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-primary-100 mb-4">
+                <CheckCircle className="h-6 w-6 text-primary-500" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
                 Password updated
@@ -180,7 +180,7 @@ export default function ResetPasswordPage() {
               </p>
               <Link
                 to="/auth/login"
-                className="block w-full py-2 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 text-center"
+                className="block w-full py-2 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 text-center"
               >
                 Sign in now
               </Link>
@@ -236,7 +236,7 @@ export default function ResetPasswordPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                  className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                   placeholder="Enter new password"
                 />
                 <button
@@ -273,7 +273,7 @@ export default function ResetPasswordPage() {
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                  className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                   placeholder="Confirm new password"
                 />
                 <button
@@ -295,7 +295,7 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>

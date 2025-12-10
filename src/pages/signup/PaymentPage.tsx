@@ -200,7 +200,7 @@ function CheckoutForm({
         </div>
         <div className="flex justify-between font-semibold">
           <span className="text-gray-900">Monthly Total</span>
-          <span className="text-emerald-600">{formatPrice(monthlyTotal)}/mo</span>
+          <span className="text-primary-500">{formatPrice(monthlyTotal)}/mo</span>
         </div>
       </div>
 
@@ -210,11 +210,11 @@ function CheckoutForm({
           type="checkbox"
           checked={agreedToTerms}
           onChange={(e) => setAgreedToTerms(e.target.checked)}
-          className="h-4 w-4 mt-1 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
+          className="h-4 w-4 mt-1 text-primary-500 focus:ring-primary-500 border-gray-300 rounded"
         />
         <span className="ml-2 text-sm text-gray-600">
           I agree to the{' '}
-          <a href="/terms" className="text-emerald-600 hover:underline" target="_blank" rel="noopener noreferrer">
+          <a href="/terms" className="text-primary-500 hover:underline" target="_blank" rel="noopener noreferrer">
             Terms of Service
           </a>{' '}
           and authorize ShiftCheck to charge my payment method monthly
@@ -234,7 +234,7 @@ function CheckoutForm({
         <button
           type="submit"
           disabled={processing || !stripe || !elements}
-          className="flex-1 flex justify-center items-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50"
+          className="flex-1 flex justify-center items-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 disabled:opacity-50"
         >
           {processing ? (
             <>
@@ -374,7 +374,7 @@ function DemoCheckoutForm({
         </div>
         <div className="flex justify-between font-semibold">
           <span className="text-gray-900">Monthly Total</span>
-          <span className="text-emerald-600">{formatPrice(monthlyTotal)}/mo</span>
+          <span className="text-primary-500">{formatPrice(monthlyTotal)}/mo</span>
         </div>
       </div>
 
@@ -384,11 +384,11 @@ function DemoCheckoutForm({
           type="checkbox"
           checked={agreedToTerms}
           onChange={(e) => setAgreedToTerms(e.target.checked)}
-          className="h-4 w-4 mt-1 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
+          className="h-4 w-4 mt-1 text-primary-500 focus:ring-primary-500 border-gray-300 rounded"
         />
         <span className="ml-2 text-sm text-gray-600">
           I agree to the{' '}
-          <a href="/terms" className="text-emerald-600 hover:underline" target="_blank" rel="noopener noreferrer">
+          <a href="/terms" className="text-primary-500 hover:underline" target="_blank" rel="noopener noreferrer">
             Terms of Service
           </a>{' '}
           and authorize ShiftCheck to charge my payment method monthly
@@ -408,7 +408,7 @@ function DemoCheckoutForm({
         <button
           type="submit"
           disabled={processing}
-          className="flex-1 flex justify-center items-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50"
+          className="flex-1 flex justify-center items-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 disabled:opacity-50"
         >
           {processing ? (
             <>
@@ -551,7 +551,7 @@ export default function PaymentPage() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="animate-spin h-8 w-8 text-emerald-600" />
+        <Loader2 className="animate-spin h-8 w-8 text-primary-500" />
       </div>
     );
   }
@@ -571,14 +571,14 @@ export default function PaymentPage() {
           <div className="flex items-center justify-center space-x-2">
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
-                <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-medium">
+                <div className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-medium">
                   <Check className="h-4 w-4" />
                 </div>
-                {step < 4 && <div className="w-8 sm:w-12 h-0.5 bg-emerald-600"></div>}
+                {step < 4 && <div className="w-8 sm:w-12 h-0.5 bg-primary-500"></div>}
               </div>
             ))}
-            <div className="w-8 sm:w-12 h-0.5 bg-emerald-600"></div>
-            <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-medium">
+            <div className="w-8 sm:w-12 h-0.5 bg-primary-500"></div>
+            <div className="w-8 h-8 rounded-full bg-primary-500 text-white flex items-center justify-center text-sm font-medium">
               5
             </div>
           </div>
@@ -611,7 +611,7 @@ export default function PaymentPage() {
             </div>
             <div className="border-t pt-3 flex justify-between">
               <span className="font-semibold text-gray-900">Monthly Total</span>
-              <span className="font-bold text-emerald-600 text-xl">
+              <span className="font-bold text-primary-500 text-xl">
                 {formatPrice(monthlyTotal)}/mo
               </span>
             </div>
@@ -635,7 +635,7 @@ export default function PaymentPage() {
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900 flex items-center">
-              <CreditCard className="h-5 w-5 mr-2 text-emerald-600" />
+              <CreditCard className="h-5 w-5 mr-2 text-primary-500" />
               Payment Details
             </h2>
           </div>
@@ -648,7 +648,7 @@ export default function PaymentPage() {
                 appearance: {
                   theme: 'stripe',
                   variables: {
-                    colorPrimary: '#059669', // emerald-600
+                    colorPrimary: '#6c8f32', // ShiftCheck primary green
                     colorBackground: '#ffffff',
                     colorText: '#1f2937',
                     colorDanger: '#dc2626',

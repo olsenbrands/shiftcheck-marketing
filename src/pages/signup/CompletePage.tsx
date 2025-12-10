@@ -151,7 +151,7 @@ export default function CompletePage() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
-        <Loader2 className="animate-spin h-8 w-8 text-emerald-600 mb-4" />
+        <Loader2 className="animate-spin h-8 w-8 text-primary-500 mb-4" />
         <p className="text-gray-600">
           {activating ? 'Activating your restaurants...' : 'Loading...'}
         </p>
@@ -166,8 +166,8 @@ export default function CompletePage() {
       <div className="max-w-2xl mx-auto">
         {/* Success Header */}
         <div className="text-center mb-8">
-          <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100">
-            <CheckCircle className="h-10 w-10 text-emerald-600" />
+          <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-primary-100">
+            <CheckCircle className="h-10 w-10 text-primary-500" />
           </div>
           <h1 className="mt-6 text-3xl font-bold text-gray-900">
             Welcome to ShiftCheck!
@@ -179,7 +179,7 @@ export default function CompletePage() {
 
         {/* Account Summary */}
         <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
-          <div className="px-6 py-4 bg-emerald-600">
+          <div className="px-6 py-4 bg-primary-500">
             <h2 className="text-lg font-semibold text-white">Account Summary</h2>
           </div>
           <div className="p-6 space-y-4">
@@ -195,7 +195,7 @@ export default function CompletePage() {
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Active Restaurants</span>
-              <span className="font-medium text-emerald-600">
+              <span className="font-medium text-primary-500">
                 {activeRestaurants.length} of {restaurants.length}
               </span>
             </div>
@@ -212,7 +212,7 @@ export default function CompletePage() {
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-medium ${
                       subscription.status === 'active' || subscription.status === 'trialing'
-                        ? 'bg-emerald-100 text-emerald-700'
+                        ? 'bg-primary-100 text-primary-700'
                         : 'bg-yellow-100 text-yellow-700'
                     }`}
                   >
@@ -236,7 +236,7 @@ export default function CompletePage() {
         <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900 flex items-center">
-              <Store className="h-5 w-5 mr-2 text-emerald-600" />
+              <Store className="h-5 w-5 mr-2 text-primary-500" />
               Your Restaurants
             </h2>
           </div>
@@ -250,7 +250,7 @@ export default function CompletePage() {
                 <span
                   className={`px-3 py-1 rounded-full text-sm font-medium ${
                     restaurant.is_active
-                      ? 'bg-emerald-100 text-emerald-700'
+                      ? 'bg-primary-100 text-primary-700'
                       : 'bg-gray-100 text-gray-600'
                   }`}
                 >
@@ -262,22 +262,22 @@ export default function CompletePage() {
         </div>
 
         {/* Download CTA */}
-        <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl shadow-lg p-8 text-center text-white mb-8">
+        <div className="bg-gradient-to-r from-primary-500 to-primary-600 rounded-xl shadow-lg p-8 text-center text-white mb-8">
           <Download className="h-12 w-12 mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-2">Download the ShiftCheck App</h2>
-          <p className="mb-6 text-emerald-100">
+          <p className="mb-6 text-primary-100">
             Download directly from our website. Your managers and team members need the app to complete tasks.
           </p>
           <a
             href="https://app.shiftcheck.app/download"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-8 py-4 bg-white text-emerald-600 rounded-lg font-semibold text-lg hover:bg-emerald-50 transition-colors shadow-md"
+            className="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-500 rounded-lg font-semibold text-lg hover:bg-primary-50 transition-colors shadow-md"
           >
             <Download className="w-6 h-6 mr-2" />
             Download App
           </a>
-          <p className="mt-4 text-emerald-200 text-sm">
+          <p className="mt-4 text-primary-200 text-sm">
             Works on iPhone, Android, and desktop browsers
           </p>
         </div>
@@ -287,7 +287,7 @@ export default function CompletePage() {
           <h2 className="text-lg font-semibold text-gray-900 mb-4">What's Next?</h2>
           <ul className="space-y-3">
             <li className="flex items-start">
-              <span className="flex items-center justify-center h-6 w-6 rounded-full bg-emerald-100 text-emerald-600 text-sm font-medium mr-3">
+              <span className="flex items-center justify-center h-6 w-6 rounded-full bg-primary-100 text-primary-500 text-sm font-medium mr-3">
                 1
               </span>
               <span className="text-gray-600">
@@ -295,7 +295,7 @@ export default function CompletePage() {
               </span>
             </li>
             <li className="flex items-start">
-              <span className="flex items-center justify-center h-6 w-6 rounded-full bg-emerald-100 text-emerald-600 text-sm font-medium mr-3">
+              <span className="flex items-center justify-center h-6 w-6 rounded-full bg-primary-100 text-primary-500 text-sm font-medium mr-3">
                 2
               </span>
               <span className="text-gray-600">
@@ -303,7 +303,7 @@ export default function CompletePage() {
               </span>
             </li>
             <li className="flex items-start">
-              <span className="flex items-center justify-center h-6 w-6 rounded-full bg-emerald-100 text-emerald-600 text-sm font-medium mr-3">
+              <span className="flex items-center justify-center h-6 w-6 rounded-full bg-primary-100 text-primary-500 text-sm font-medium mr-3">
                 3
               </span>
               <span className="text-gray-600">
@@ -317,7 +317,7 @@ export default function CompletePage() {
         <div className="mt-8 text-center">
           <Link
             to="/account/dashboard"
-            className="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-medium"
+            className="inline-flex items-center text-primary-500 hover:text-primary-700 font-medium"
           >
             Go to Account Portal
             <ExternalLink className="ml-2 h-4 w-4" />

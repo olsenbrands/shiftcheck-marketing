@@ -258,7 +258,7 @@ export default function VerifyEmailPage() {
                 <button
                   onClick={handleResend}
                   disabled={resendCooldown > 0 || loading}
-                  className="font-medium text-emerald-600 hover:text-emerald-500 disabled:text-gray-400 disabled:cursor-not-allowed"
+                  className="font-medium text-primary-500 hover:text-primary-600 disabled:text-gray-400 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     'Sending...'
@@ -281,7 +281,7 @@ export default function VerifyEmailPage() {
 
           <p className="mt-8 text-center text-sm text-gray-500">
             Already verified?{' '}
-            <Link to="/auth/login" className="font-medium text-emerald-600 hover:text-emerald-500">
+            <Link to="/auth/login" className="font-medium text-primary-500 hover:text-primary-600">
               Sign in
             </Link>
           </p>
@@ -326,8 +326,8 @@ export default function VerifyEmailPage() {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow-lg sm:rounded-xl sm:px-10">
           {hasValidReferral && (
-            <div className="mb-6 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
-              <p className="text-sm text-emerald-700">
+            <div className="mb-6 p-3 bg-primary-50 border border-primary-200 rounded-lg">
+              <p className="text-sm text-primary-700">
                 You're signing up with a referral code. You'll get 10% off your first month!
               </p>
             </div>
@@ -365,7 +365,7 @@ export default function VerifyEmailPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`block w-full pl-10 pr-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 ${
+                  className={`block w-full pl-10 pr-3 py-2 border rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 ${
                     email && !isValidEmail
                       ? 'border-red-300 focus:ring-red-500 focus:border-red-500'
                       : 'border-gray-300'
@@ -385,7 +385,7 @@ export default function VerifyEmailPage() {
               <button
                 type="submit"
                 disabled={loading || !isValidEmail}
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
@@ -417,7 +417,7 @@ export default function VerifyEmailPage() {
             <div className="mt-6">
               <Link
                 to="/auth/login"
-                className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+                className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
                 Sign in instead
               </Link>
@@ -427,11 +427,11 @@ export default function VerifyEmailPage() {
 
         <p className="mt-8 text-center text-xs text-gray-500">
           By continuing, you agree to our{' '}
-          <Link to="/terms" className="text-emerald-600 hover:text-emerald-500">
+          <Link to="/terms" className="text-primary-500 hover:text-primary-600">
             Terms of Service
           </Link>{' '}
           and{' '}
-          <Link to="/privacy" className="text-emerald-600 hover:text-emerald-500">
+          <Link to="/privacy" className="text-primary-500 hover:text-primary-600">
             Privacy Policy
           </Link>
         </p>

@@ -63,8 +63,8 @@ export default function ForgotPasswordPage() {
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow-lg sm:rounded-xl sm:px-10">
             <div className="text-center">
-              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100 mb-4">
-                <CheckCircle className="h-6 w-6 text-emerald-600" />
+              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-primary-100 mb-4">
+                <CheckCircle className="h-6 w-6 text-primary-500" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
                 Check your email
@@ -88,7 +88,7 @@ export default function ForgotPasswordPage() {
                 </button>
                 <Link
                   to="/auth/login"
-                  className="block w-full py-2 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 text-center"
+                  className="block w-full py-2 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 text-center"
                 >
                   Back to sign in
                 </Link>
@@ -145,7 +145,7 @@ export default function ForgotPasswordPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                   placeholder="you@example.com"
                 />
               </div>
@@ -156,7 +156,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
@@ -173,7 +173,7 @@ export default function ForgotPasswordPage() {
             <div className="text-center">
               <Link
                 to="/auth/login"
-                className="inline-flex items-center text-sm font-medium text-emerald-600 hover:text-emerald-500"
+                className="inline-flex items-center text-sm font-medium text-primary-500 hover:text-primary-600"
               >
                 <ArrowLeft className="h-4 w-4 mr-1" />
                 Back to sign in

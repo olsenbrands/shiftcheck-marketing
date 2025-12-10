@@ -269,7 +269,7 @@ export default function AIHelpBot() {
         className={`fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full shadow-lg transition-all duration-300 ${
           isOpen
             ? 'bg-gray-600 hover:bg-gray-700'
-            : 'bg-emerald-600 hover:bg-emerald-700'
+            : 'bg-primary-500 hover:bg-primary-600'
         }`}
         aria-label={isOpen ? 'Close help chat' : 'Open help chat'}
       >
@@ -292,12 +292,12 @@ export default function AIHelpBot() {
       {isOpen && (
         <div className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
           {/* Header */}
-          <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 px-4 py-3 flex items-center justify-between">
+          <div className="bg-gradient-to-r from-primary-600 to-primary-700 px-4 py-3 flex items-center justify-between">
             <div className="flex items-center">
               <Bot className="h-6 w-6 text-white mr-2" />
               <div>
                 <h3 className="font-semibold text-white">ShiftCheck Help</h3>
-                <p className="text-xs text-emerald-100">AI-powered assistance</p>
+                <p className="text-xs text-primary-100">AI-powered assistance</p>
               </div>
             </div>
             <button
@@ -318,17 +318,17 @@ export default function AIHelpBot() {
                 <div
                   className={`max-w-[85%] rounded-2xl px-4 py-2 ${
                     message.role === 'user'
-                      ? 'bg-emerald-600 text-white rounded-br-sm'
+                      ? 'bg-primary-500 text-white rounded-br-sm'
                       : 'bg-white text-gray-800 shadow-sm border border-gray-100 rounded-bl-sm'
                   }`}
                 >
                   <div className="flex items-start gap-2">
                     {message.role === 'assistant' && (
-                      <Bot className="h-4 w-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                      <Bot className="h-4 w-4 text-primary-500 mt-0.5 flex-shrink-0" />
                     )}
                     <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                     {message.role === 'user' && (
-                      <User className="h-4 w-4 text-emerald-200 mt-0.5 flex-shrink-0" />
+                      <User className="h-4 w-4 text-primary-200 mt-0.5 flex-shrink-0" />
                     )}
                   </div>
                 </div>
@@ -339,7 +339,7 @@ export default function AIHelpBot() {
               <div className="flex justify-start">
                 <div className="bg-white rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm border border-gray-100">
                   <div className="flex items-center gap-2">
-                    <Loader2 className="h-4 w-4 text-emerald-600 animate-spin" />
+                    <Loader2 className="h-4 w-4 text-primary-500 animate-spin" />
                     <span className="text-sm text-gray-500">Thinking...</span>
                   </div>
                 </div>
@@ -359,7 +359,7 @@ export default function AIHelpBot() {
                     key={index}
                     onClick={() => handleSendMessage(action)}
                     disabled={isLoading}
-                    className="text-xs px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full hover:bg-emerald-100 transition-colors disabled:opacity-50"
+                    className="text-xs px-3 py-1.5 bg-primary-50 text-primary-700 rounded-full hover:bg-primary-100 transition-colors disabled:opacity-50"
                   >
                     {action}
                   </button>
@@ -392,12 +392,12 @@ export default function AIHelpBot() {
                 onKeyPress={handleKeyPress}
                 placeholder="Ask a question..."
                 disabled={isLoading}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent disabled:bg-gray-50"
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:bg-gray-50"
               />
               <button
                 onClick={() => handleSendMessage()}
                 disabled={!inputValue.trim() || isLoading}
-                className="p-2 bg-emerald-600 text-white rounded-full hover:bg-emerald-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="p-2 bg-primary-500 text-white rounded-full hover:bg-primary-600 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 <Send className="h-4 w-4" />
               </button>
@@ -406,7 +406,7 @@ export default function AIHelpBot() {
               Powered by AI &bull;{' '}
               <button
                 onClick={handleEmailSupport}
-                className="text-emerald-600 hover:underline"
+                className="text-primary-500 hover:underline"
               >
                 Email support
               </button>

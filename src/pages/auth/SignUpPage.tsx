@@ -130,7 +130,7 @@ export default function SignUpPage() {
                 Didn't receive an email?{' '}
                 <button
                   onClick={() => setSuccess(false)}
-                  className="font-medium text-emerald-600 hover:text-emerald-500"
+                  className="font-medium text-primary-500 hover:text-primary-600"
                 >
                   Try again
                 </button>
@@ -150,7 +150,7 @@ export default function SignUpPage() {
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           Already have an account?{' '}
-          <Link to="/auth/login" className="font-medium text-emerald-600 hover:text-emerald-500">
+          <Link to="/auth/login" className="font-medium text-primary-500 hover:text-primary-600">
             Sign in
           </Link>
         </p>
@@ -159,8 +159,8 @@ export default function SignUpPage() {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow-lg sm:rounded-xl sm:px-10">
           {referralCode && (
-            <div className="mb-6 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
-              <p className="text-sm text-emerald-700">
+            <div className="mb-6 p-3 bg-primary-50 border border-primary-200 rounded-lg">
+              <p className="text-sm text-primary-700">
                 You're signing up with a referral code. You'll get 10% off your first month!
               </p>
             </div>
@@ -180,13 +180,13 @@ export default function SignUpPage() {
                       <div className="mt-3 flex flex-col sm:flex-row gap-2">
                         <Link
                           to="/auth/login"
-                          className="inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+                          className="inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                         >
                           Sign in instead
                         </Link>
                         <Link
                           to="/auth/forgot-password"
-                          className="inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
+                          className="inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                         >
                           Forgot password?
                         </Link>
@@ -214,7 +214,7 @@ export default function SignUpPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                   placeholder="you@example.com"
                 />
               </div>
@@ -237,7 +237,7 @@ export default function SignUpPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                  className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                   placeholder="At least 8 characters"
                 />
                 <button
@@ -271,7 +271,7 @@ export default function SignUpPage() {
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                   placeholder="Confirm your password"
                 />
               </div>
@@ -282,7 +282,7 @@ export default function SignUpPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
@@ -298,11 +298,11 @@ export default function SignUpPage() {
 
           <p className="mt-6 text-xs text-center text-gray-500">
             By creating an account, you agree to our{' '}
-            <Link to="/terms" className="text-emerald-600 hover:text-emerald-500">
+            <Link to="/terms" className="text-primary-500 hover:text-primary-600">
               Terms of Service
             </Link>{' '}
             and{' '}
-            <Link to="/privacy" className="text-emerald-600 hover:text-emerald-500">
+            <Link to="/privacy" className="text-primary-500 hover:text-primary-600">
               Privacy Policy
             </Link>
           </p>
