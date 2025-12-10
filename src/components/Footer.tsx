@@ -31,6 +31,7 @@ const Footer = () => {
             <div>
               <h5 className="font-bold text-gray-900 mb-4 uppercase tracking-wider text-xs">Resources</h5>
               <ul className="space-y-3">
+                <li><a href="https://app.shiftcheck.app/download" className="hover:text-primary-600 transition-colors">Download App</a></li>
                 <li><Link to="/case-studies" className="hover:text-primary-600 transition-colors">Case Studies</Link></li>
                 <li><Link to="/blog" className="hover:text-primary-600 transition-colors">Blog</Link></li>
                 <li><Link to="/faq" className="hover:text-primary-600 transition-colors">FAQ</Link></li>
