@@ -42,7 +42,7 @@ const ROI = () => {
                 For the price of paying a $15/hr employee for <strong className="text-white">just 6.5 hours</strong>, you can check the quality of every shift, every single day, <strong className="text-white">every month</strong>.
               </p>
               <Link
-                to="/auth/verify-email"
+                to="/auth/signup"
                 className="inline-block bg-white text-primary-900 px-10 py-4 rounded font-bold hover:bg-gray-100 transition-all shadow-xl"
               >
                 Start My Free Trial

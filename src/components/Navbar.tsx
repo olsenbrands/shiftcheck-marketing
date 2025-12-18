@@ -41,7 +41,7 @@ const Navbar = () => {
             Login
           </Link>
           <Link
-            to="/auth/verify-email"
+            to="/auth/signup"
             className="bg-primary-500 text-white px-5 py-2 rounded font-bold text-sm hover:bg-primary-600 transition-all shadow-lg shadow-primary-500/30"
           >
             Sign Up
@@ -69,7 +69,7 @@ const Navbar = () => {
             Login
           </Link>
           <Link
-            to="/auth/verify-email"
+            to="/auth/signup"
             className="bg-primary-500 text-white px-6 py-3 rounded font-bold w-full text-center uppercase tracking-wide shadow-lg shadow-primary-500/30"
             onClick={() => setIsOpen(false)}
           >

@@ -80,7 +80,7 @@ const PricingPage = () => {
               If ShiftCheck doesn't transform how you run your restaurant within 30 days, we'll refund your first month. No questions asked.
             </p>
             <Link
-              to="/auth/verify-email"
+              to="/auth/signup"
               className="inline-flex items-center justify-center gap-2 bg-primary-500 text-white px-8 py-4 rounded font-bold hover:bg-primary-600 transition-all shadow-lg"
             >
               Start Your Free Trial

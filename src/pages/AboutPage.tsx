@@ -155,7 +155,7 @@ const AboutPage = () => {
             Join the restaurant owners who are taking control of their operations with ShiftCheck.
           </p>
           <Link
-            to="/auth/verify-email"
+            to="/auth/signup"
             className="inline-flex items-center justify-center gap-2 bg-primary-500 text-white px-8 py-4 rounded font-bold hover:bg-primary-600 transition-all shadow-lg"
           >
             Start Free Trial

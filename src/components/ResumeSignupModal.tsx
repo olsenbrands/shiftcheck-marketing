@@ -86,13 +86,13 @@ export default function ResumeSignupModal({
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-gray-500">Your progress</span>
               <span className="text-sm font-medium text-primary-500">
-                Step {stepNumber} of 7
+                Step {stepNumber} of 8
               </span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
               <div
                 className="bg-primary-500 h-2 rounded-full transition-all"
-                style={{ width: `${(stepNumber / 7) * 100}%` }}
+                style={{ width: `${(stepNumber / 8) * 100}%` }}
               />
             </div>
             <p className="text-sm text-gray-600">

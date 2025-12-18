@@ -13,13 +13,14 @@ import { useState, useEffect, useCallback } from 'react';
 // ============================================================================
 
 export type SignupStep =
-  | 'email'      // Step 1: Email verification
-  | 'login'      // Step 2: Create account/login
-  | 'profile'    // Step 3: Personal info & billing
-  | 'restaurants'// Step 4: Add restaurants
-  | 'plan'       // Step 5: Select plan
-  | 'payment'    // Step 6: Payment (if paid plan)
-  | 'complete';  // Step 7: Completed
+  | 'signup'       // Step 1: Create account (email + password)
+  | 'verify_email' // Step 2: Verify email (awaiting verification)
+  | 'login'        // Step 3: Login after verification
+  | 'profile'      // Step 4: Personal info & billing
+  | 'restaurants'  // Step 5: Add restaurants
+  | 'plan'         // Step 6: Select plan
+  | 'payment'      // Step 7: Payment (if paid plan)
+  | 'complete';    // Step 8: Completed
 
 export interface SignupProgressData {
   currentStep: SignupStep;
@@ -51,7 +52,8 @@ const EXPIRATION_HOURS = 72; // Progress expires after 72 hours
 
 // Step order for determining which step to resume from
 const STEP_ORDER: SignupStep[] = [
-  'email',
+  'signup',
+  'verify_email',
   'login',
   'profile',
   'restaurants',
@@ -62,7 +64,8 @@ const STEP_ORDER: SignupStep[] = [
 
 // URL mapping for each step
 const STEP_URLS: Record<SignupStep, string> = {
-  email: '/signup',
+  signup: '/auth/signup',
+  verify_email: '/auth/signup', // Show success state with "check your email"
   login: '/auth/login',
   profile: '/signup/profile',
   restaurants: '/signup/restaurants',
@@ -152,14 +155,16 @@ function detectCurrentStep(): SignupStep {
   }
 
   if (verifiedEmail || emailVerified === 'true') {
+    // Email has been verified, user should login
     return 'login';
   }
 
   if (signupEmail) {
-    return 'email';
+    // Has signup email but not verified - waiting for verification
+    return 'verify_email';
   }
 
-  return 'email';
+  return 'signup';
 }
 
 // ============================================================================
@@ -258,14 +263,14 @@ export function checkIncompleteSignup(): {
       isExpired: true,
       step: stored.currentStep,
       email: stored.email || null,
-      resumeUrl: '/signup',
+      resumeUrl: '/auth/signup',
     };
   }
 
   if (!stored || stored.currentStep === 'complete') {
     // Also check localStorage for implicit progress
     const detectedStep = detectCurrentStep();
-    if (detectedStep !== 'email') {
+    if (detectedStep !== 'signup') {
       const email = localStorage.getItem('verified_email') || localStorage.getItem('signup_email');
       return {
         hasIncomplete: true,
@@ -281,7 +286,7 @@ export function checkIncompleteSignup(): {
       isExpired: false,
       step: null,
       email: null,
-      resumeUrl: '/signup',
+      resumeUrl: '/auth/signup',
     };
   }
 
@@ -299,8 +304,9 @@ export function checkIncompleteSignup(): {
  */
 export function getStepDescription(step: SignupStep): string {
   const descriptions: Record<SignupStep, string> = {
-    email: 'Email verification',
-    login: 'Account creation',
+    signup: 'Account creation',
+    verify_email: 'Email verification',
+    login: 'Sign in',
     profile: 'Profile information',
     restaurants: 'Restaurant setup',
     plan: 'Plan selection',

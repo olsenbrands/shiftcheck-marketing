@@ -7,7 +7,7 @@
 
 import { useState } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { signIn } from '../../services/authService';
 import { ownerProfileExists } from '../../services/ownerService';
 import { getSupabaseAuthErrorMessage, getNetworkErrorMessage } from '../../utils/errorMessages';
@@ -17,15 +17,19 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const redirectParam = searchParams.get('redirect');
+  const emailParam = searchParams.get('email');
+  const justVerified = searchParams.get('verified') === 'true';
 
-  // Pre-fill email from verification flow or signup
+  // Pre-fill email from URL param, verification flow, or signup
   const getInitialEmail = () => {
-    return localStorage.getItem('verified_email') ||
+    return emailParam ||
+           localStorage.getItem('verified_email') ||
            localStorage.getItem('signup_email') ||
            '';
   };
 
   const [email, setEmail] = useState(getInitialEmail);
+  const [showVerifiedBanner, setShowVerifiedBanner] = useState(justVerified);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -94,7 +98,7 @@ export default function LoginPage() {
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           Don't have an account?{' '}
-          <Link to="/auth/verify-email" className="font-medium text-primary-500 hover:text-primary-600">
+          <Link to="/auth/signup" className="font-medium text-primary-500 hover:text-primary-600">
             Sign up
           </Link>
         </p>
@@ -102,6 +106,28 @@ export default function LoginPage() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow-lg sm:rounded-xl sm:px-10">
+          {/* Email verified banner */}
+          {showVerifiedBanner && (
+            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+              <div className="flex items-start">
+                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 mr-2 shrink-0" />
+                <div>
+                  <p className="text-sm font-medium text-green-800">Email verified successfully!</p>
+                  <p className="mt-1 text-sm text-green-600">Enter your password to continue setting up your account.</p>
+                </div>
+                <button
+                  onClick={() => setShowVerifiedBanner(false)}
+                  className="ml-auto text-green-400 hover:text-green-600"
+                >
+                  <span className="sr-only">Dismiss</span>
+                  <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          )}
+
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
               <div className="p-4 bg-red-50 border border-red-200 rounded-lg">

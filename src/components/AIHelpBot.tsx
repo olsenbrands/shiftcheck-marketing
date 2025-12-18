@@ -35,10 +35,10 @@ interface SignUpContext {
 // Map routes to sign-up context
 function getSignUpContext(pathname: string): SignUpContext | null {
   const contextMap: Record<string, SignUpContext> = {
-    '/auth/verify-email': {
-      step: 'email_verification',
+    '/auth/signup': {
+      step: 'signup',
       stepNumber: 1,
-      description: 'Email Verification - User is verifying their email address',
+      description: 'Sign Up - User is creating their account with email and password',
     },
     '/auth/login': {
       step: 'login',

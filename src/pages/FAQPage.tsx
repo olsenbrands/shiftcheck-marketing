@@ -12,6 +12,11 @@ const faqs: FAQItem[] = [
   // Getting Started
   {
     category: "Getting Started",
+    question: "How do I download ShiftCheck?",
+    answer: "ShiftCheck is a web app that you install directly from our website — not from the App Store or Google Play. Visit app.shiftcheck.app/download on your device and follow the simple \"Add to Home Screen\" instructions. It works on iPhone, Android, and desktop browsers. Once installed, it works just like a regular app!"
+  },
+  {
+    category: "Getting Started",
     question: "How long does it take to set up ShiftCheck?",
     answer: "Most restaurants are up and running within 30 minutes. You can create your first checklist in under 5 minutes. Our onboarding wizard guides you through the entire process step by step."
   },
@@ -191,7 +196,7 @@ const FAQPage = () => {
               <ArrowRight size={18} />
             </Link>
             <Link
-              to="/auth/verify-email"
+              to="/auth/signup"
               className="inline-flex items-center justify-center gap-2 bg-white text-gray-700 border border-gray-300 px-8 py-4 rounded font-bold hover:bg-gray-50 transition-all"
             >
               Start Free Trial

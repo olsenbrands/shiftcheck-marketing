@@ -127,13 +127,18 @@ export default function AuthCallbackPage() {
         // Track email verified event
         trackEmailVerified(data.email);
 
-        // Update signup progress
+        // Update signup progress - now at login step
         const progressData = { currentStep: 'login' as const, email: data.email, lastUpdated: Date.now(), expiresAt: Date.now() + 72 * 60 * 60 * 1000 };
         localStorage.setItem('signup_progress', JSON.stringify(progressData));
 
-        // Store verified email in localStorage for sign-up flow
+        // Store verified email in localStorage for login pre-fill
         localStorage.setItem('verified_email', data.email);
         localStorage.setItem('email_verified', 'true');
+
+        // Auto-redirect to login after 3 seconds
+        setTimeout(() => {
+          navigate(`/auth/login?email=${encodeURIComponent(data.email)}&verified=true`);
+        }, 3000);
 
       } catch (err) {
         // Network or unexpected error
@@ -197,13 +202,16 @@ export default function AuthCallbackPage() {
                 Your email <strong>{verifiedEmail}</strong> has been verified.
               </p>
               <p className="mt-4 text-sm text-gray-500">
-                Continue to create your account.
+                Sign in with your password to continue setting up your account.
+              </p>
+              <p className="mt-2 text-xs text-gray-400">
+                Redirecting you to sign in...
               </p>
               <button
-                onClick={() => navigate('/auth/signup')}
+                onClick={() => navigate(`/auth/login?email=${encodeURIComponent(verifiedEmail)}&verified=true`)}
                 className="mt-6 w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
               >
-                Continue to sign up
+                Sign in now
               </button>
             </div>
           </div>

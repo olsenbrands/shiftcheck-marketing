@@ -68,15 +68,17 @@ export interface CreateOwnerInput {
 
 /**
  * Sign up a new user with email and password
- * Creates auth.users record, user needs to verify email
+ * Creates auth.users record in Supabase Auth.
+ *
+ * NOTE: Email confirmation is handled via Brevo (not Supabase's built-in emails).
+ * Ensure "Confirm email" is DISABLED in Supabase Dashboard > Authentication > Providers > Email
+ * to prevent double emails being sent.
  */
 export async function signUp(credentials: SignUpCredentials): Promise<AuthResult> {
   const { data, error } = await supabase.auth.signUp({
     email: credentials.email,
     password: credentials.password,
-    options: {
-      emailRedirectTo: `${window.location.origin}/auth/callback`,
-    },
+    // No emailRedirectTo needed - we use Brevo for verification emails
   });
 
   return {

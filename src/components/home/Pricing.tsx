@@ -50,7 +50,7 @@ const Pricing = () => {
               </li>
             </ul>
             <Link
-              to="/auth/verify-email"
+              to="/auth/signup"
               className="w-full py-3 rounded-lg border border-gray-300 text-gray-700 font-bold hover:bg-gray-50 transition-colors text-center"
             >
               Start Free Trial
@@ -103,7 +103,7 @@ const Pricing = () => {
               </li>
             </ul>
             <Link
-              to="/auth/verify-email"
+              to="/auth/signup"
               className="w-full py-3 rounded-lg bg-primary-500 text-white font-bold hover:bg-primary-600 transition-colors shadow-lg shadow-primary-500/20 text-center"
             >
               Get Started
@@ -155,7 +155,7 @@ const Pricing = () => {
               </li>
             </ul>
             <Link
-              to="/auth/verify-email"
+              to="/auth/signup"
               className="w-full py-3 rounded-lg border border-gray-300 text-gray-700 font-bold hover:bg-gray-50 transition-colors text-center"
             >
               Get Started

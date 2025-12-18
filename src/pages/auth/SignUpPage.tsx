@@ -1,16 +1,18 @@
 /**
- * Sign Up Page (Step 1 & 2 Combined)
+ * Sign Up Page
  * ShiftCheck Marketing Website
  *
- * Creates account with email/password, then redirects to profile step.
+ * Creates account with email/password, sends Brevo verification email.
+ * After email verification, user signs in and continues to profile setup.
  */
 
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
-import { signUp } from '../../services/authService';
+import { signUp, sendVerificationEmail } from '../../services/authService';
 import { extractReferralCodeFromURL } from '../../utils/referral';
-import { getSupabaseAuthErrorMessage, getNetworkErrorMessage, getDuplicateEmailMessage } from '../../utils/errorMessages';
+import { getSupabaseAuthErrorMessage, getNetworkErrorMessage, getDuplicateEmailMessage, getBrevoErrorMessage } from '../../utils/errorMessages';
+import { trackSignupStarted, trackEmailVerificationSent } from '../../services/analyticsService';
 import ShiftCheckLogo from '../../components/ShiftCheckLogo';
 
 export default function SignUpPage() {
@@ -25,9 +27,49 @@ export default function SignUpPage() {
   const [errorAction, setErrorAction] = useState<string | null>(null);
   const [isDuplicateEmail, setIsDuplicateEmail] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
+  const [resendLoading, setResendLoading] = useState(false);
 
   // Extract referral code from URL
   const referralCode = searchParams.get('ref') || extractReferralCodeFromURL(window.location.href);
+
+  // Handle resending verification email
+  const handleResend = async () => {
+    if (resendCooldown > 0 || resendLoading) return;
+
+    setResendLoading(true);
+    setError(null);
+
+    try {
+      const result = await sendVerificationEmail(email);
+
+      if (result.success) {
+        trackEmailVerificationSent(email, true);
+        // Start cooldown
+        setResendCooldown(60);
+        const interval = setInterval(() => {
+          setResendCooldown((prev) => {
+            if (prev <= 1) {
+              clearInterval(interval);
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+      } else {
+        const errorDetails = getBrevoErrorMessage(
+          result.statusCode,
+          result.errorCode,
+          result.error || undefined
+        );
+        setError(errorDetails.message);
+      }
+    } catch {
+      setError('Failed to resend verification email. Please try again.');
+    } finally {
+      setResendLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,8 +131,42 @@ export default function SignUpPage() {
           localStorage.setItem('referral_code', referralCode);
         }
 
-        // Store email for profile step
+        // Store email for later steps
         localStorage.setItem('signup_email', email);
+
+        // Track signup started
+        trackSignupStarted({
+          source: referralCode ? 'referral' : 'direct',
+          referral_code: referralCode || undefined,
+        });
+
+        // Send Brevo verification email (branded email)
+        const verificationResult = await sendVerificationEmail(email);
+
+        if (!verificationResult.success) {
+          // Handle Brevo email error but don't fail signup
+          // Account is created, just email failed
+          console.error('Failed to send verification email:', verificationResult.error);
+          const errorDetails = getBrevoErrorMessage(
+            verificationResult.statusCode,
+            verificationResult.errorCode,
+            verificationResult.error || undefined
+          );
+          // Still show success but note the email issue
+          setError(`Account created, but we had trouble sending the verification email. ${errorDetails.action || 'Please try resending.'}`);
+        } else {
+          // Track email sent
+          trackEmailVerificationSent(email, false);
+        }
+
+        // Update signup progress
+        const progressData = {
+          currentStep: 'verify_email' as const,
+          email,
+          lastUpdated: Date.now(),
+          expiresAt: Date.now() + 72 * 60 * 60 * 1000
+        };
+        localStorage.setItem('signup_progress', JSON.stringify(progressData));
 
         // Show success message
         setSuccess(true);
@@ -119,25 +195,58 @@ export default function SignUpPage() {
                 Check your email
               </h2>
               <p className="mt-2 text-sm text-gray-600">
-                We sent a verification link to <strong>{email}</strong>
+                We sent a verification link to
+              </p>
+              <p className="mt-1 text-sm font-medium text-gray-900">
+                {email}
               </p>
               <p className="mt-4 text-sm text-gray-500">
                 Click the link in your email to verify your account and continue setting up ShiftCheck.
               </p>
             </div>
 
-            <div className="mt-6">
+            {error && (
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-sm text-red-600">{error}</p>
+              </div>
+            )}
+
+            <div className="mt-6 space-y-4">
               <p className="text-center text-sm text-gray-500">
                 Didn't receive an email?{' '}
                 <button
-                  onClick={() => setSuccess(false)}
-                  className="font-medium text-primary-500 hover:text-primary-600"
+                  onClick={handleResend}
+                  disabled={resendCooldown > 0 || resendLoading}
+                  className="font-medium text-primary-500 hover:text-primary-600 disabled:text-gray-400 disabled:cursor-not-allowed"
                 >
-                  Try again
+                  {resendLoading ? (
+                    'Sending...'
+                  ) : resendCooldown > 0 ? (
+                    `Resend in ${resendCooldown}s`
+                  ) : (
+                    'Resend email'
+                  )}
                 </button>
               </p>
+
+              <button
+                onClick={() => {
+                  setSuccess(false);
+                  setError(null);
+                }}
+                className="w-full text-center text-sm text-gray-500 hover:text-gray-700"
+              >
+                Use a different email address
+              </button>
             </div>
           </div>
+
+          <p className="mt-8 text-center text-sm text-gray-500">
+            Already verified?{' '}
+            <Link to="/auth/login" className="font-medium text-primary-500 hover:text-primary-600">
+              Sign in
+            </Link>
+          </p>
         </div>
       </div>
     );
