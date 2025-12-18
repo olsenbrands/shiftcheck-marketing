@@ -36,6 +36,7 @@ export interface Restaurant {
   // Restaurant settings
   active_task_library: string;  // DB column - 'empty' or 'subway'
   photo_url: string | null;  // DB column
+  emoji_icon: string | null;  // DB column - emoji instead of photo
   short_code: string | null;  // DB column - pairing code
   manager_invited: boolean;  // DB column (legacy)
   soft_deleted: boolean;  // DB column
@@ -72,8 +73,9 @@ export interface CreateRestaurantInput {
   manager_email: string;
   manager_phone: string;
   managed_by_owner?: boolean;
-  // Photo
+  // Photo/emoji
   photo_url?: string | null;
+  emoji_icon?: string | null;  // Emoji instead of photo
   // Legacy fields (for backward compatibility)
   restaurant_address?: string;  // Computed from separate fields if not provided
   manager_name?: string;  // Computed from first + last if not provided
@@ -97,8 +99,9 @@ export interface UpdateRestaurantInput {
   manager_email?: string;
   manager_phone?: string;
   managed_by_owner?: boolean;
-  // Photo
+  // Photo/emoji
   photo_url?: string | null;
+  emoji_icon?: string | null;  // Emoji instead of photo
   // Legacy fields (for backward compatibility)
   restaurant_address?: string;
   manager_name?: string;
@@ -154,6 +157,7 @@ export async function createRestaurant(input: CreateRestaurantInput): Promise<{
       // Settings
       active_task_library: input.active_task_library || 'empty',
       photo_url: input.photo_url || null,
+      emoji_icon: input.emoji_icon || null,
       managed_by_owner: input.managed_by_owner || false,
     })
     .select()
@@ -361,6 +365,7 @@ export async function updateRestaurant(
   // Settings
   if (input.active_task_library) updates.active_task_library = input.active_task_library;
   if (input.photo_url !== undefined) updates.photo_url = input.photo_url;
+  if (input.emoji_icon !== undefined) updates.emoji_icon = input.emoji_icon;
   if (input.managed_by_owner !== undefined) updates.managed_by_owner = input.managed_by_owner;
 
   const { data, error } = await supabase

@@ -12,18 +12,16 @@ import {
   CreditCard,
   Users,
   Download,
-  LogOut,
   Loader2,
   ArrowRight,
   Calendar,
   CheckCircle,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import AuthenticatedNavbar from '../../components/AuthenticatedNavbar';
 import { getOwnerProfile, type Owner } from '../../services/ownerService';
 import { getOwnerRestaurants, type Restaurant } from '../../services/restaurantService';
 import { getOwnerSubscription, type Subscription } from '../../services/subscriptionService';
-import { signOut } from '../../services/authService';
-
 export default function DashboardPage() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
@@ -66,11 +64,6 @@ export default function DashboardPage() {
     }
   }, [user, authLoading, navigate]);
 
-  const handleSignOut = async () => {
-    await signOut();
-    navigate('/');
-  };
-
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -86,27 +79,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Link to="/" className="text-2xl font-bold text-primary-500">
-                ShiftCheck
-              </Link>
-              <span className="text-gray-400">|</span>
-              <span className="text-gray-600">Account</span>
-            </div>
-            <button
-              onClick={handleSignOut}
-              className="flex items-center text-gray-600 hover:text-gray-900"
-            >
-              <LogOut className="h-5 w-5 mr-2" />
-              Sign Out
-            </button>
-          </div>
-        </div>
-      </header>
+      <AuthenticatedNavbar section="Account" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}

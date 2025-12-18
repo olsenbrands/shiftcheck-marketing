@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, Loader2, ArrowRight, Store, Plus, Minus } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import AuthenticatedNavbar from '../../components/AuthenticatedNavbar';
 import { getOwnerRestaurants, type Restaurant } from '../../services/restaurantService';
 import { getPricingTiers, type PricingTier } from '../../services/subscriptionService';
 import { trackPlanSelected } from '../../services/analyticsService';
@@ -174,7 +175,9 @@ export default function PlanPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50">
+      <AuthenticatedNavbar section="Sign Up" />
+      <div className="py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Progress Indicator */}
         <div className="mb-8">
@@ -543,6 +546,7 @@ export default function PlanPage() {
             </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   );

@@ -17,6 +17,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { CreditCard, Lock, Loader2, ArrowLeft, Check, AlertCircle, RefreshCw } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import AuthenticatedNavbar from '../../components/AuthenticatedNavbar';
 import { getOwnerProfile, type Owner } from '../../services/ownerService';
 import { getOwnerRestaurants, type Restaurant } from '../../services/restaurantService';
 import { getPricingTier, type PricingTier } from '../../services/subscriptionService';
@@ -564,7 +565,9 @@ export default function PaymentPage() {
   const useRealStripe = stripePromise && clientSecret;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50">
+      <AuthenticatedNavbar section="Sign Up" />
+      <div className="py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-lg mx-auto">
         {/* Progress Indicator */}
         <div className="mb-8">
@@ -677,6 +680,7 @@ export default function PaymentPage() {
             />
           )}
         </div>
+      </div>
       </div>
     </div>
   );

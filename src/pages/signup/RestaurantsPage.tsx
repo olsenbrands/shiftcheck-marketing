@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Store, Phone, MapPin, User, Plus, Trash2, Check, Loader2, ArrowRight, Pencil, Camera, Mail, Smartphone } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import AuthenticatedNavbar from '../../components/AuthenticatedNavbar';
 import { getOwnerProfile, type Owner } from '../../services/ownerService';
 import {
   createRestaurant,
@@ -90,6 +91,12 @@ export default function RestaurantsPage() {
   const [managerEmail, setManagerEmail] = useState('');
   const [managerPhone, setManagerPhone] = useState('');
   const [isOwnerManaged, setIsOwnerManaged] = useState(false);
+
+  // Form state - Photo/Emoji
+  const [emojiIcon, setEmojiIcon] = useState<string | null>(null);
+
+  // Restaurant emoji options (same as shiftcheck-app)
+  const RESTAURANT_EMOJIS = ['🍕', '🍔', '🌮', '🌯', '🥪', '🍜', '🍣', '🥗', '🍝', '🍛', '🍦', '🍩', '☕', '🍺', '🍷', '🏪', '🍴', '🍽️'];
 
   // Load owner profile and restaurants
   useEffect(() => {
@@ -184,6 +191,8 @@ export default function RestaurantsPage() {
       setManagerPhone(formatPhoneForDisplay(restaurant.manager_phone || ''));
     }
     setIsOwnerManaged(restaurant.managed_by_owner || false);
+    // Photo/emoji
+    setEmojiIcon((restaurant as Restaurant & { emoji_icon?: string | null }).emoji_icon || null);
     // Set editing state
     setEditingRestaurantId(restaurant.id);
     setShowForm(true);
@@ -205,6 +214,7 @@ export default function RestaurantsPage() {
     setManagerEmail('');
     setManagerPhone('');
     setIsOwnerManaged(false);
+    setEmojiIcon(null);
     setEditingRestaurantId(null);
     setError(null);
   };
@@ -264,6 +274,7 @@ export default function RestaurantsPage() {
           manager_email: managerEmail,
           manager_phone: managerPhone,
           managed_by_owner: isOwnerManaged,
+          emoji_icon: emojiIcon,
         };
 
         const { restaurant: updated, error: updateError } = await updateRestaurant(
@@ -299,6 +310,7 @@ export default function RestaurantsPage() {
           manager_email: managerEmail,
           manager_phone: managerPhone,
           managed_by_owner: isOwnerManaged,
+          emoji_icon: emojiIcon,
         };
 
         const { restaurant, error: createError } = await createRestaurant(createInput);
@@ -380,7 +392,9 @@ export default function RestaurantsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50">
+      <AuthenticatedNavbar section="Sign Up" />
+      <div className="py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         {/* Progress Indicator */}
         <div className="mb-8">
@@ -702,7 +716,11 @@ export default function RestaurantsPage() {
                 <p className="text-xs text-gray-500 mb-3">Upload a photo of your restaurant</p>
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <Camera className="h-6 w-6 text-gray-400" />
+                    {emojiIcon ? (
+                      <span className="text-4xl">{emojiIcon}</span>
+                    ) : (
+                      <Camera className="h-6 w-6 text-gray-400" />
+                    )}
                   </div>
                   <button
                     type="button"
@@ -713,6 +731,31 @@ export default function RestaurantsPage() {
                   </button>
                 </div>
                 <p className="text-xs text-gray-400 mt-2">Recommended: Square image, at least 400x400px. Max 5MB.</p>
+
+                {/* Emoji Picker */}
+                <p className="text-xs text-gray-500 mt-4 mb-2">Or choose an emoji instead:</p>
+                <div className="flex flex-wrap gap-2">
+                  {RESTAURANT_EMOJIS.map((emoji) => (
+                    <button
+                      key={emoji}
+                      type="button"
+                      onClick={() => setEmojiIcon(emoji)}
+                      className={`w-10 h-10 text-2xl rounded-lg flex items-center justify-center transition-all ${
+                        emojiIcon === emoji
+                          ? 'border-2 border-primary-500 bg-primary-50'
+                          : 'border border-gray-300 bg-white hover:border-primary-300'
+                      }`}
+                    >
+                      {emoji}
+                    </button>
+                  ))}
+                </div>
+                {emojiIcon && (
+                  <p className="text-xs text-primary-600 mt-2 flex items-center">
+                    <Check className="h-3 w-3 mr-1" />
+                    Emoji selected: {emojiIcon}
+                  </p>
+                )}
               </div>
 
               {/* Paired Device Section */}
@@ -796,6 +839,7 @@ export default function RestaurantsPage() {
             </p>
           )}
         </div>
+      </div>
       </div>
     </div>
   );

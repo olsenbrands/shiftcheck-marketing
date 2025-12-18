@@ -6,9 +6,8 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
-  ArrowLeft,
   Users,
   Copy,
   Check,
@@ -18,6 +17,7 @@ import {
   DollarSign,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import AuthenticatedNavbar from '../../components/AuthenticatedNavbar';
 import { getOwnerProfile, type Owner } from '../../services/ownerService';
 import {
   getMyReferrals,
@@ -138,20 +138,12 @@ export default function ReferralsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center">
-            <Link
-              to="/account/dashboard"
-              className="flex items-center text-gray-600 hover:text-gray-900 mr-4"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Dashboard
-            </Link>
-          </div>
-        </div>
-      </header>
+      <AuthenticatedNavbar
+        section="Referrals"
+        showBack={true}
+        backTo="/account/dashboard"
+        backLabel="Back to Dashboard"
+      />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">

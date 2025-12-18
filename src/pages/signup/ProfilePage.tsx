@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Phone, MapPin, Building2, Loader2, ArrowRight, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import AuthenticatedNavbar from '../../components/AuthenticatedNavbar';
 import { createOwnerProfile } from '../../services/authService';
 import { getOwnerProfile, updateBillingAddress } from '../../services/ownerService';
 import { formatPhoneForDisplay, isValidUSPhone } from '../../utils/phone';
@@ -247,7 +248,9 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50">
+      <AuthenticatedNavbar section="Sign Up" />
+      <div className="py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md mx-auto">
         {/* Progress Indicator */}
         <div className="mb-8">
@@ -494,6 +497,7 @@ export default function ProfilePage() {
             </>
           )}
         </div>
+      </div>
       </div>
     </div>
   );

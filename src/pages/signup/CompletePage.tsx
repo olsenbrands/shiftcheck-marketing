@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { CheckCircle, Download, Store, Loader2, ExternalLink } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import AuthenticatedNavbar from '../../components/AuthenticatedNavbar';
 import { getOwnerProfile, markSignUpCompleted, type Owner } from '../../services/ownerService';
 import { getOwnerRestaurants, activateRestaurantsUpToLimit, type Restaurant } from '../../services/restaurantService';
 import {
@@ -162,7 +163,9 @@ export default function CompletePage() {
   const activeRestaurants = restaurants.filter((r) => r.is_active);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50">
+      <AuthenticatedNavbar section="Sign Up" />
+      <div className="py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         {/* Success Header */}
         <div className="text-center mb-8">
@@ -323,6 +326,7 @@ export default function CompletePage() {
             <ExternalLink className="ml-2 h-4 w-4" />
           </Link>
         </div>
+      </div>
       </div>
     </div>
   );
