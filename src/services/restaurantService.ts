@@ -18,11 +18,25 @@ export interface Restaurant {
   id: string;
   name: string;
   owner_id: string;
-  address: string;  // DB column
-  manager_name: string;  // DB column
+  // Address fields (separate for App compatibility)
+  address: string;  // DB column - legacy combined address
+  street: string | null;  // DB column - street address
+  suite: string | null;  // DB column - suite/unit
+  city: string | null;  // DB column - city
+  state: string | null;  // DB column - state
+  zip_code: string | null;  // DB column - zip code
+  country: string;  // DB column - 'US' or 'CA'
+  store_phone: string | null;  // DB column - restaurant phone
+  // Manager fields
+  manager_name: string;  // DB column - combined name (legacy)
+  manager_first_name: string | null;  // DB column - first name
+  manager_last_name: string | null;  // DB column - last name
   manager_email: string;  // DB column
   manager_phone: string;  // DB column
+  // Restaurant settings
+  active_task_library: string;  // DB column - 'empty' or 'subway'
   photo_url: string | null;  // DB column
+  short_code: string | null;  // DB column - pairing code
   manager_invited: boolean;  // DB column (legacy)
   soft_deleted: boolean;  // DB column
   // Invitation tracking (syncs with shiftcheck-app Owner Dashboard)
@@ -42,23 +56,52 @@ export interface Restaurant {
 
 export interface CreateRestaurantInput {
   name: string;
-  restaurant_address: string;
-  restaurant_phone?: string;  // Optional - not in DB schema
-  restaurant_photo_url?: string | null;
-  manager_name: string;
-  manager_email?: string;  // Required by DB but optional here (defaults to owner email)
+  // Address fields (separate - matches App)
+  street: string;
+  suite?: string;
+  city: string;
+  state: string;
+  zip_code: string;
+  country?: string;  // 'US' or 'CA', defaults to 'US'
+  store_phone: string;
+  // Task library
+  active_task_library?: string;  // 'empty' or 'subway', defaults to 'empty'
+  // Manager fields (separate - matches App)
+  manager_first_name: string;
+  manager_last_name?: string;
+  manager_email: string;
   manager_phone: string;
-  managed_by_owner?: boolean; // If true, owner is the manager (syncs with DB column)
+  managed_by_owner?: boolean;
+  // Photo
+  photo_url?: string | null;
+  // Legacy fields (for backward compatibility)
+  restaurant_address?: string;  // Computed from separate fields if not provided
+  manager_name?: string;  // Computed from first + last if not provided
 }
 
 export interface UpdateRestaurantInput {
   name?: string;
-  restaurant_address?: string;
-  restaurant_phone?: string;
-  restaurant_photo_url?: string | null;
-  manager_name?: string;
+  // Address fields (separate - matches App)
+  street?: string;
+  suite?: string;
+  city?: string;
+  state?: string;
+  zip_code?: string;
+  country?: string;  // 'US' or 'CA'
+  store_phone?: string;
+  // Task library
+  active_task_library?: string;  // 'empty' or 'subway'
+  // Manager fields (separate - matches App)
+  manager_first_name?: string;
+  manager_last_name?: string;
+  manager_email?: string;
   manager_phone?: string;
-  managed_by_owner?: boolean; // Syncs with DB column
+  managed_by_owner?: boolean;
+  // Photo
+  photo_url?: string | null;
+  // Legacy fields (for backward compatibility)
+  restaurant_address?: string;
+  manager_name?: string;
 }
 
 // ============================================
@@ -79,17 +122,39 @@ export async function createRestaurant(input: CreateRestaurantInput): Promise<{
     return { restaurant: null, error: new Error('User not authenticated') };
   }
 
+  // Build combined address for legacy compatibility
+  const combinedAddress = input.restaurant_address || buildCombinedAddress(input);
+
+  // Build combined manager name for legacy compatibility
+  const combinedManagerName = input.manager_name ||
+    `${input.manager_first_name}${input.manager_last_name ? ' ' + input.manager_last_name : ''}`.trim();
+
   const { data, error } = await supabase
     .from('restaurants')
     .insert({
       name: input.name,
       owner_id: user.id,
-      address: input.restaurant_address,  // DB column is 'address'
-      manager_name: input.manager_name,
-      manager_email: input.manager_email || 'manager@example.com', // Required by DB schema
+      // Address fields (separate)
+      street: input.street,
+      suite: input.suite || null,
+      city: input.city,
+      state: input.state,
+      zip_code: input.zip_code,
+      country: input.country || 'US',
+      store_phone: normalizePhone(input.store_phone),
+      // Legacy combined address
+      address: combinedAddress,
+      // Manager fields (separate)
+      manager_first_name: input.manager_first_name,
+      manager_last_name: input.manager_last_name || null,
+      manager_email: input.manager_email,
       manager_phone: normalizePhone(input.manager_phone),
-      photo_url: input.restaurant_photo_url || null,  // DB column is 'photo_url'
-      managed_by_owner: input.managed_by_owner || false,  // Persist checkbox state
+      // Legacy combined name
+      manager_name: combinedManagerName,
+      // Settings
+      active_task_library: input.active_task_library || 'empty',
+      photo_url: input.photo_url || null,
+      managed_by_owner: input.managed_by_owner || false,
     })
     .select()
     .single();
@@ -104,6 +169,23 @@ export async function createRestaurant(input: CreateRestaurantInput): Promise<{
   }
 
   return { restaurant: data as Restaurant, error: null };
+}
+
+/**
+ * Build combined address string from separate fields
+ */
+function buildCombinedAddress(input: CreateRestaurantInput | UpdateRestaurantInput): string {
+  const parts: string[] = [];
+  if ('street' in input && input.street) parts.push(input.street);
+  if ('suite' in input && input.suite) parts.push(`Ste ${input.suite}`);
+  if ('city' in input && input.city) parts.push(input.city);
+  if ('state' in input && input.state && 'zip_code' in input && input.zip_code) {
+    parts.push(`${input.state} ${input.zip_code}`);
+  } else {
+    if ('state' in input && input.state) parts.push(input.state);
+    if ('zip_code' in input && input.zip_code) parts.push(input.zip_code);
+  }
+  return parts.join(', ');
 }
 
 /**
@@ -242,12 +324,43 @@ export async function updateRestaurant(
 
   const updates: Record<string, unknown> = {};
 
+  // Basic info
   if (input.name) updates.name = input.name;
-  if (input.restaurant_address) updates.address = input.restaurant_address;  // DB column is 'address'
-  if (input.restaurant_photo_url !== undefined) updates.photo_url = input.restaurant_photo_url;  // DB column is 'photo_url'
-  if (input.manager_name) updates.manager_name = input.manager_name;
+
+  // Address fields (separate)
+  if (input.street) updates.street = input.street;
+  if (input.suite !== undefined) updates.suite = input.suite || null;
+  if (input.city) updates.city = input.city;
+  if (input.state) updates.state = input.state;
+  if (input.zip_code) updates.zip_code = input.zip_code;
+  if (input.country) updates.country = input.country;
+  if (input.store_phone) updates.store_phone = normalizePhone(input.store_phone);
+
+  // Build combined address if any address field changed
+  if (input.street || input.city || input.state || input.zip_code) {
+    updates.address = input.restaurant_address || buildCombinedAddress(input);
+  } else if (input.restaurant_address) {
+    updates.address = input.restaurant_address;
+  }
+
+  // Manager fields (separate)
+  if (input.manager_first_name) updates.manager_first_name = input.manager_first_name;
+  if (input.manager_last_name !== undefined) updates.manager_last_name = input.manager_last_name || null;
+  if (input.manager_email) updates.manager_email = input.manager_email;
   if (input.manager_phone) updates.manager_phone = normalizePhone(input.manager_phone);
-  // Always include managed_by_owner when provided (even if false)
+
+  // Build combined manager name if any name field changed
+  if (input.manager_first_name || input.manager_last_name !== undefined) {
+    const firstName = input.manager_first_name || '';
+    const lastName = input.manager_last_name || '';
+    updates.manager_name = input.manager_name || `${firstName}${lastName ? ' ' + lastName : ''}`.trim();
+  } else if (input.manager_name) {
+    updates.manager_name = input.manager_name;
+  }
+
+  // Settings
+  if (input.active_task_library) updates.active_task_library = input.active_task_library;
+  if (input.photo_url !== undefined) updates.photo_url = input.photo_url;
   if (input.managed_by_owner !== undefined) updates.managed_by_owner = input.managed_by_owner;
 
   const { data, error } = await supabase
