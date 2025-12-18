@@ -171,11 +171,18 @@ export default function RestaurantsPage() {
     setIsCanada(restaurant.country === 'CA');
     setStorePhone(formatPhoneForDisplay(restaurant.store_phone || ''));
     setTaskLibrary(restaurant.active_task_library || 'empty');
-    // Manager fields
-    setManagerFirstName(restaurant.manager_first_name || '');
-    setManagerLastName(restaurant.manager_last_name || '');
-    setManagerEmail(restaurant.manager_email || '');
-    setManagerPhone(formatPhoneForDisplay(restaurant.manager_phone || ''));
+    // Manager fields - if owner-managed, always use owner profile data
+    if (restaurant.managed_by_owner && owner) {
+      setManagerFirstName(owner.first_name || '');
+      setManagerLastName(owner.last_name || '');
+      setManagerEmail(owner.email || '');
+      setManagerPhone(formatPhoneForDisplay(owner.phone || ''));
+    } else {
+      setManagerFirstName(restaurant.manager_first_name || '');
+      setManagerLastName(restaurant.manager_last_name || '');
+      setManagerEmail(restaurant.manager_email || '');
+      setManagerPhone(formatPhoneForDisplay(restaurant.manager_phone || ''));
+    }
     setIsOwnerManaged(restaurant.managed_by_owner || false);
     // Set editing state
     setEditingRestaurantId(restaurant.id);
