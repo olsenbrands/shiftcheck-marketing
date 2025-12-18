@@ -13,9 +13,12 @@ import { createHmac } from 'crypto';
 const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
 const BREVO_API_KEY = process.env.BREVO_API_KEY!;
 const VERIFICATION_SECRET = process.env.VERIFICATION_SECRET || process.env.STRIPE_WEBHOOK_SECRET!;
-const BASE_URL = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'http://localhost:5173';
+// Use production URL in production, preview URL in preview, localhost in development
+const BASE_URL = process.env.VERCEL_ENV === 'production'
+  ? 'https://shiftcheck.app'
+  : process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:5173';
 
 // Token expiration (24 hours)
 const TOKEN_EXPIRY_HOURS = 24;
