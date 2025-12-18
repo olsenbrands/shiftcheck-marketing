@@ -3,6 +3,7 @@
  * ShiftCheck Marketing Website
  *
  * Handles referral code tracking and redemption.
+ * Uses `owner_profiles` as the single source of truth for owner data.
  * - Validates referral codes
  * - Creates redemption records
  * - Queries referral statistics
@@ -53,8 +54,8 @@ export async function validateReferralCode(code: string): Promise<{
 
   // Check if code exists in database
   const { data, error } = await supabase
-    .from('owners')
-    .select('id')
+    .from('owner_profiles')
+    .select('owner_id')
     .eq('referral_code', code)
     .single();
 
@@ -66,7 +67,7 @@ export async function validateReferralCode(code: string): Promise<{
     return { isValid: false, referrerOwnerId: null, error: new Error(error.message) };
   }
 
-  return { isValid: true, referrerOwnerId: data.id, error: null };
+  return { isValid: true, referrerOwnerId: data.owner_id, error: null };
 }
 
 // ============================================
@@ -246,9 +247,9 @@ export async function getOrCreateReferralCode(): Promise<{
 
   // Get owner's referral code
   const { data: owner, error: fetchError } = await supabase
-    .from('owners')
+    .from('owner_profiles')
     .select('referral_code')
-    .eq('id', user.id)
+    .eq('owner_id', user.id)
     .single();
 
   if (fetchError) {
@@ -264,9 +265,9 @@ export async function getOrCreateReferralCode(): Promise<{
   const newCode = generateReferralCode();
 
   const { error: updateError } = await supabase
-    .from('owners')
+    .from('owner_profiles')
     .update({ referral_code: newCode })
-    .eq('id', user.id);
+    .eq('owner_id', user.id);
 
   if (updateError) {
     return { referralCode: null, error: new Error(updateError.message) };
@@ -289,9 +290,9 @@ export async function getMyReferrer(): Promise<{
   }
 
   const { data: owner, error } = await supabase
-    .from('owners')
+    .from('owner_profiles')
     .select('referred_by_code')
-    .eq('id', user.id)
+    .eq('owner_id', user.id)
     .single();
 
   if (error) {

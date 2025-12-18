@@ -35,9 +35,11 @@ export interface AuthResult {
 }
 
 export interface Owner {
-  id: string;
+  id: string;              // Auto-generated profile ID
+  owner_id: string;        // References auth.users(id) - this is the primary identifier
   first_name: string;
   last_name: string;
+  full_name: string;       // Auto-computed from first_name + last_name
   email: string;
   phone: string;
   billing_street: string | null;
@@ -50,6 +52,11 @@ export interface Owner {
   email_verified: boolean;
   email_verified_at: string | null;
   sign_up_completed_at: string | null;
+  // App-specific fields
+  receive_sms: boolean;
+  receive_email_reports: boolean;
+  timezone: string;
+  preferred_report_time: string;
   created_at: string;
   updated_at: string;
 }
@@ -249,11 +256,8 @@ export async function isEmailVerified(): Promise<boolean> {
  * Create owner profile for authenticated user
  * Called after sign up during profile step (Step 3)
  *
- * Creates records in BOTH tables:
- * 1. `owners` - Marketing website's owner table
- * 2. `owner_profiles` - ShiftCheck app's owner profile table
- *
- * This ensures data is available in both the marketing website (shiftcheck.app)
+ * Uses `owner_profiles` as the single source of truth for owner data.
+ * This table is shared between the marketing website (shiftcheck.app)
  * and the main app (app.shiftcheck.app).
  */
 export async function createOwnerProfile(input: CreateOwnerInput): Promise<{
@@ -270,13 +274,13 @@ export async function createOwnerProfile(input: CreateOwnerInput): Promise<{
   // Generate unique referral code
   const referralCode = generateReferralCode();
   const normalizedPhone = normalizePhone(input.phone);
-  const fullName = `${input.first_name} ${input.last_name}`;
 
-  // Create owner record in marketing website's table
+  // Create owner record in owner_profiles (single source of truth)
+  // Note: full_name is auto-computed by database trigger from first_name + last_name
   const { data, error } = await supabase
-    .from('owners')
+    .from('owner_profiles')
     .insert({
-      id: user.id,
+      owner_id: user.id,
       first_name: input.first_name,
       last_name: input.last_name,
       email: input.email,
@@ -285,33 +289,17 @@ export async function createOwnerProfile(input: CreateOwnerInput): Promise<{
       referred_by_code: input.referred_by_code || null,
       email_verified: !!user.email_confirmed_at,
       email_verified_at: user.email_confirmed_at || null,
+      // App-specific defaults
+      receive_sms: true,
+      receive_email_reports: true,
+      timezone: 'America/New_York',
+      preferred_report_time: '8:00 AM',
     })
     .select()
     .single();
 
   if (error) {
     return { owner: null, error: new Error(error.message) };
-  }
-
-  // Also create record in app's owner_profiles table for shiftcheck-app compatibility
-  // This ensures owner data appears when logging into app.shiftcheck.app
-  const { error: profileError } = await supabase
-    .from('owner_profiles')
-    .insert({
-      owner_id: user.id,
-      full_name: fullName,
-      email: input.email,
-      phone: normalizedPhone,
-      receive_sms: true,
-      receive_email_reports: true,
-      timezone: 'America/New_York',
-      preferred_report_time: '8:00 AM',
-    });
-
-  if (profileError) {
-    // Log but don't fail - the owners table is the primary record
-    // The owner_profiles is for app compatibility
-    console.error('Failed to create owner_profiles record:', profileError.message);
   }
 
   return { owner: data as Owner, error: null };

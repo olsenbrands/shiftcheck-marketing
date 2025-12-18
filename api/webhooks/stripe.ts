@@ -50,9 +50,9 @@ async function getRawBody(req: VercelRequest): Promise<Buffer> {
  */
 async function getOwnerById(ownerId: string) {
   const { data: owner } = await supabase
-    .from('owners')
+    .from('owner_profiles')
     .select('email, first_name, last_name')
-    .eq('id', ownerId)
+    .eq('owner_id', ownerId)
     .single();
 
   return owner;
@@ -80,12 +80,12 @@ async function findOwnerByCustomerId(customerId: string) {
   }
 
   const { data: owner } = await supabase
-    .from('owners')
-    .select('id')
+    .from('owner_profiles')
+    .select('owner_id')
     .eq('email', customer.email)
     .single();
 
-  return owner?.id || null;
+  return owner?.owner_id || null;
 }
 
 /**

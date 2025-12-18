@@ -3,6 +3,7 @@
  * ShiftCheck Marketing Website
  *
  * Handles owner profile CRUD operations (except createOwnerProfile which is in authService).
+ * All operations use `owner_profiles` as the single source of truth.
  * All operations require authenticated user (owner).
  */
 
@@ -49,9 +50,9 @@ export async function getOwnerProfile(): Promise<{
   }
 
   const { data, error } = await supabase
-    .from('owners')
+    .from('owner_profiles')
     .select('*')
-    .eq('id', user.id)
+    .eq('owner_id', user.id)
     .single();
 
   if (error) {
@@ -79,6 +80,7 @@ export async function ownerProfileExists(): Promise<boolean> {
 
 /**
  * Update owner personal info (Step 3A fields)
+ * Note: full_name is auto-computed by database trigger when first_name or last_name changes
  */
 export async function updateOwnerProfile(input: UpdateOwnerProfileInput): Promise<{
   owner: Owner | null;
@@ -97,9 +99,9 @@ export async function updateOwnerProfile(input: UpdateOwnerProfileInput): Promis
   if (input.phone) updates.phone = normalizePhone(input.phone);
 
   const { data, error } = await supabase
-    .from('owners')
+    .from('owner_profiles')
     .update(updates)
-    .eq('id', user.id)
+    .eq('owner_id', user.id)
     .select()
     .single();
 
@@ -124,7 +126,7 @@ export async function updateBillingAddress(input: UpdateBillingAddressInput): Pr
   }
 
   const { data, error } = await supabase
-    .from('owners')
+    .from('owner_profiles')
     .update({
       billing_street: input.billing_street,
       billing_city: input.billing_city,
@@ -132,7 +134,7 @@ export async function updateBillingAddress(input: UpdateBillingAddressInput): Pr
       billing_zip: input.billing_zip,
       billing_country: input.billing_country || 'US',
     })
-    .eq('id', user.id)
+    .eq('owner_id', user.id)
     .select()
     .single();
 
@@ -157,11 +159,11 @@ export async function markSignUpCompleted(): Promise<{
   }
 
   const { data, error } = await supabase
-    .from('owners')
+    .from('owner_profiles')
     .update({
       sign_up_completed_at: new Date().toISOString(),
     })
-    .eq('id', user.id)
+    .eq('owner_id', user.id)
     .select()
     .single();
 
@@ -185,8 +187,8 @@ export async function lookupReferralCode(code: string): Promise<{
   error: Error | null;
 }> {
   const { data, error } = await supabase
-    .from('owners')
-    .select('id')
+    .from('owner_profiles')
+    .select('owner_id')
     .eq('referral_code', code)
     .single();
 
@@ -197,5 +199,5 @@ export async function lookupReferralCode(code: string): Promise<{
     return { referrerId: null, error: new Error(error.message) };
   }
 
-  return { referrerId: data.id, error: null };
+  return { referrerId: data.owner_id, error: null };
 }
