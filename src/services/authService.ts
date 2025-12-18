@@ -248,6 +248,13 @@ export async function isEmailVerified(): Promise<boolean> {
 /**
  * Create owner profile for authenticated user
  * Called after sign up during profile step (Step 3)
+ *
+ * Creates records in BOTH tables:
+ * 1. `owners` - Marketing website's owner table
+ * 2. `owner_profiles` - ShiftCheck app's owner profile table
+ *
+ * This ensures data is available in both the marketing website (shiftcheck.app)
+ * and the main app (app.shiftcheck.app).
  */
 export async function createOwnerProfile(input: CreateOwnerInput): Promise<{
   owner: Owner | null;
@@ -262,8 +269,10 @@ export async function createOwnerProfile(input: CreateOwnerInput): Promise<{
 
   // Generate unique referral code
   const referralCode = generateReferralCode();
+  const normalizedPhone = normalizePhone(input.phone);
+  const fullName = `${input.first_name} ${input.last_name}`;
 
-  // Create owner record
+  // Create owner record in marketing website's table
   const { data, error } = await supabase
     .from('owners')
     .insert({
@@ -271,7 +280,7 @@ export async function createOwnerProfile(input: CreateOwnerInput): Promise<{
       first_name: input.first_name,
       last_name: input.last_name,
       email: input.email,
-      phone: normalizePhone(input.phone),
+      phone: normalizedPhone,
       referral_code: referralCode,
       referred_by_code: input.referred_by_code || null,
       email_verified: !!user.email_confirmed_at,
@@ -282,6 +291,27 @@ export async function createOwnerProfile(input: CreateOwnerInput): Promise<{
 
   if (error) {
     return { owner: null, error: new Error(error.message) };
+  }
+
+  // Also create record in app's owner_profiles table for shiftcheck-app compatibility
+  // This ensures owner data appears when logging into app.shiftcheck.app
+  const { error: profileError } = await supabase
+    .from('owner_profiles')
+    .insert({
+      owner_id: user.id,
+      full_name: fullName,
+      email: input.email,
+      phone: normalizedPhone,
+      receive_sms: true,
+      receive_email_reports: true,
+      timezone: 'America/New_York',
+      preferred_report_time: '8:00 AM',
+    });
+
+  if (profileError) {
+    // Log but don't fail - the owners table is the primary record
+    // The owner_profiles is for app compatibility
+    console.error('Failed to create owner_profiles record:', profileError.message);
   }
 
   return { owner: data as Owner, error: null };
