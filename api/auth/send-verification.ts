@@ -20,8 +20,8 @@ const BASE_URL = process.env.VERCEL_URL
 // Token expiration (24 hours)
 const TOKEN_EXPIRY_HOURS = 24;
 
-// Email template ID for verification
-const VERIFICATION_TEMPLATE_ID = parseInt(process.env.BREVO_TEMPLATE_EMAIL_VERIFICATION || '7', 10);
+// Email template ID for verification (Template 8 = Email Verification, Template 7 = Password Reset)
+const VERIFICATION_TEMPLATE_ID = parseInt(process.env.BREVO_TEMPLATE_EMAIL_VERIFICATION || '8', 10);
 
 // Sender configuration
 const SENDER = {
