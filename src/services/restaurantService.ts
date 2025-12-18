@@ -29,10 +29,11 @@ export interface Restaurant {
   invitation_sent: boolean;  // DB column - TRUE when SMS sent
   invitation_sent_at: string | null;  // DB column - timestamp of send
   invitation_sent_to_phone: string | null;  // DB column - E.164 phone
+  // Owner-managed flag (syncs with shiftcheck-app)
+  managed_by_owner: boolean;  // DB column - TRUE when owner manages this restaurant
   // Aliases for backward compatibility in UI code
   restaurant_address?: string | null;
   restaurant_phone?: string | null;
-  is_owner_managed?: boolean;
   is_active?: boolean;
   activated_at?: string | null;
   created_at: string;
@@ -47,7 +48,7 @@ export interface CreateRestaurantInput {
   manager_name: string;
   manager_email?: string;  // Required by DB but optional here (defaults to owner email)
   manager_phone: string;
-  is_owner_managed?: boolean; // If true, owner is the manager
+  managed_by_owner?: boolean; // If true, owner is the manager (syncs with DB column)
 }
 
 export interface UpdateRestaurantInput {
@@ -57,7 +58,7 @@ export interface UpdateRestaurantInput {
   restaurant_photo_url?: string | null;
   manager_name?: string;
   manager_phone?: string;
-  is_owner_managed?: boolean;
+  managed_by_owner?: boolean; // Syncs with DB column
 }
 
 // ============================================
@@ -88,6 +89,7 @@ export async function createRestaurant(input: CreateRestaurantInput): Promise<{
       manager_email: input.manager_email || 'manager@example.com', // Required by DB schema
       manager_phone: normalizePhone(input.manager_phone),
       photo_url: input.restaurant_photo_url || null,  // DB column is 'photo_url'
+      managed_by_owner: input.managed_by_owner || false,  // Persist checkbox state
     })
     .select()
     .single();
@@ -97,7 +99,7 @@ export async function createRestaurant(input: CreateRestaurantInput): Promise<{
   }
 
   // If owner is managing this restaurant, create a manager record
-  if (input.is_owner_managed) {
+  if (input.managed_by_owner) {
     await createManagerRecordForOwner(user.id, data.id, input.manager_phone);
   }
 
@@ -245,6 +247,8 @@ export async function updateRestaurant(
   if (input.restaurant_photo_url !== undefined) updates.photo_url = input.restaurant_photo_url;  // DB column is 'photo_url'
   if (input.manager_name) updates.manager_name = input.manager_name;
   if (input.manager_phone) updates.manager_phone = normalizePhone(input.manager_phone);
+  // Always include managed_by_owner when provided (even if false)
+  if (input.managed_by_owner !== undefined) updates.managed_by_owner = input.managed_by_owner;
 
   const { data, error } = await supabase
     .from('restaurants')

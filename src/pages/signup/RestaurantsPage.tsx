@@ -130,7 +130,7 @@ export default function RestaurantsPage() {
         setRestaurantPhone(formatPhoneForDisplay(restaurantToEdit.manager_phone || restaurantToEdit.restaurant_phone || ''));
         setManagerName(restaurantToEdit.manager_name || '');
         setManagerPhone(formatPhoneForDisplay(restaurantToEdit.manager_phone || ''));
-        setIsOwnerManaged(restaurantToEdit.is_owner_managed || false);
+        setIsOwnerManaged(restaurantToEdit.managed_by_owner || false);
         setEditingRestaurantId(restaurantToEdit.id);
         setShowForm(true);
         setError(null);
@@ -155,7 +155,7 @@ export default function RestaurantsPage() {
     setRestaurantPhone(formatPhoneForDisplay(restaurant.manager_phone || restaurant.restaurant_phone || ''));
     setManagerName(restaurant.manager_name || '');
     setManagerPhone(formatPhoneForDisplay(restaurant.manager_phone || ''));
-    setIsOwnerManaged(restaurant.is_owner_managed || false);
+    setIsOwnerManaged(restaurant.managed_by_owner || false);
     setEditingRestaurantId(restaurant.id);
     setShowForm(true);
     setError(null);
@@ -192,7 +192,7 @@ export default function RestaurantsPage() {
           restaurant_phone: restaurantPhone,
           manager_name: managerName,
           manager_phone: managerPhone,
-          is_owner_managed: isOwnerManaged,
+          managed_by_owner: isOwnerManaged,
         };
 
         const { restaurant: updated, error: updateError } = await updateRestaurant(
@@ -219,7 +219,7 @@ export default function RestaurantsPage() {
           restaurant_phone: restaurantPhone,
           manager_name: managerName,
           manager_phone: managerPhone,
-          is_owner_managed: isOwnerManaged,
+          managed_by_owner: isOwnerManaged,
         };
 
         const { restaurant, error: createError } = await createRestaurant(createInput);

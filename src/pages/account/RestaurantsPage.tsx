@@ -276,7 +276,7 @@ export default function AccountRestaurantsPage() {
                         </p>
 
                         {/* Invite Manager Badge */}
-                        {restaurant.is_owner_managed ? (
+                        {restaurant.managed_by_owner ? (
                           <span className="px-2 py-0.5 text-xs font-medium text-primary-500 bg-primary-50 rounded-full">
                             Owner Managed
                           </span>
